@@ -6,5 +6,14 @@
 
 class AuthenticationManager
 	{
+        public function __construct(SecurityManager $bouncer)
+        {
+            
+        }
+
+        public function authenticateUser(User $user)
+        {
+            
+        }
 	}
 
