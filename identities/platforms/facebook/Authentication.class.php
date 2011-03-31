@@ -5,5 +5,3 @@
 class Facebook_Authenticator
 	{
 	}
-
-?>
