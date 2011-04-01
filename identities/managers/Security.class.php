@@ -9,9 +9,26 @@
 
 class SecurityManager
 {
-	protected function determineClearance()     // DEFAULT: Hide from ALL
+	/**
+	  * @return boolean
+	 **/
+	protected function determineClearance(User $user, $url)
 	{
-		throw new RuntimeException("You are not authorized.");
+		// DEFAULT: Hide from ALL
+		return false;
+	}
+
+	protected function ensureHasClearance(User $user, $url)
+	{
+		if ($this->determineClearance($user, $url) === false)
+		{
+			throw new RuntimeException("You are not authorized.");
+		}
+	}
+
+	public function guardEntrance(User $user, $url)
+	{
+		$this->ensureHasClearance($user, $url);
 	}
 }
 
