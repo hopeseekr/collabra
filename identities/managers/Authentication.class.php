@@ -21,7 +21,7 @@ class AuthenticationManager
 				return true;
 			}
 
-			return false;
+			throw new RuntimeException("You have not been properly validated.");
         }
 	}
 

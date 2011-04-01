@@ -11,15 +11,42 @@ require '../managers/Authentication.class.php';
 //
 // Type "i" to get into insert mode...
 
+define('EXAMPLE_URL', "http://www.phpexperts.pro/");
+
 $bouncer = new SecurityManager();
 $usher = new AuthenticationManager($bouncer);
 $personalAssistant = new UserManager();
 
 // Login the user...
 //$personalAssistant->login("test", "test");
-$personalAssistant->login("test", "test");
+try
+{
+	$user = $personalAssistant->login("test", "test");
+}
+catch (Exception $e)
+{
+	echo "O no. The Personal Assistant refuses to serve you:\n\t" . $e->getMessage() . "\n";
+}
 
-$bouncer->
+try
+{
+	$usher->authenticateUser($user);
+}
+catch(Exception $e)
+{
+	echo "O no. The usher doesn't think you're who you say you are:\n\t" . $e->getMessage() . "\n";
+}
+
+try
+{
+	$bouncer->guardEntrance($user, EXAMPLE_URL);
+}
+catch (Exception $e)
+{
+	echo "O no. The bouncer has rejected your access:\n\t" . $e->getMessage() . "\n";
+}
+
+
 
 
 // -- Monica's code
