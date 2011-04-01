@@ -8,10 +8,10 @@
 // SecurityManager (e.g. "The Bouncer") is responsible for allowing in approved people, and turning away all the rabble.
 
 class SecurityManager
+{
+	protected function determineClearance()     // DEFAULT: Hide from ALL
 	{
-        protected function determineClearance()     // DEFAULT: Hide from ALL
-        {
-            throw new RuntimeException("You are not authorized.");
-        }
+		throw new RuntimeException("You are not authorized.");
 	}
+}
 

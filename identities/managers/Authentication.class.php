@@ -13,7 +13,15 @@ class AuthenticationManager
 
         public function authenticateUser(User $user)
         {
-            
+            // TODO: Build this out.
+			// MOCK: Hard code to reply that "test/test" is a valid person.
+
+			if ($user->username == "test" && $user->password == "test")
+			{
+				return true;
+			}
+
+			return false;
         }
 	}
 
