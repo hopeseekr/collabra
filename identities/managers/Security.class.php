@@ -30,12 +30,13 @@ class SecurityManager
     {
         if (filter_var($url, FILTER_VALIDATE_URL) == false)
         {
-            throw new RuntimeException("Invalid URL");
+            throw new RuntimeException("Invalid URL.");
         }
     }
     
 	public function guardEntrance(User $user, $url)
 	{
+		$this->ensureValidURL($url);
 		$this->ensureHasClearance($user, $url);
 	}
 }
