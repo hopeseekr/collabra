@@ -2,7 +2,7 @@
 
 // Monica Chase (chase.mona@gmail.com) | 4 April 2011
 
-class CommoditiesExchange
+class CommodityExchange
 {
 
 	public function displayValueDifference ($commodity1, $commodity2)
