@@ -42,7 +42,7 @@ class CommodityExchange
 		return $difference;
 	}
 	
-	/** @return Commodity Returns the difference as Federal Reserve Notes.**/
+	/** @return CommodityBasket Returns the difference as Federal Reserve Notes.**/
 	protected function handleValueDifference($difference)
 	{
 		if ($difference < 0)

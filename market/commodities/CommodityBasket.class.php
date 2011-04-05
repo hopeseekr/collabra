@@ -2,7 +2,7 @@
 
 // Monica Chase (chase.mona@gmail.com) | 4 April 2011
 
-class Commodity
+class CommodityBasket
 {
 	public $name;
 	public $type;

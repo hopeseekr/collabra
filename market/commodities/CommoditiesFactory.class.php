@@ -10,7 +10,7 @@ class CommoditiesFactory
 	{
 		if ($commodityName == "Silver")
 		{
-			$silver = new Commodity;
+			$silver = new CommodityBasket;
 			$silver->name = "Silver";
 			$silver->type = "precious metal";
 			$silver->currentValuation = 45.00;
@@ -30,7 +30,7 @@ class CommoditiesFactory
 		}
 		else if ($commodityName == "Federal Reserve Note")
 		{
-			$frn = new Commodity;
+			$frn = new CommodityBasket;
 			$frn->name = "Federal Reserve Note";
 			$frn->type = "fiat paper";
 			$frn->currentValuation = 1.00;
