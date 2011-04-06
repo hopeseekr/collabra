@@ -25,12 +25,7 @@ class CommodityExchange
 		// 1. Obtain the valuation difference for the two commodities.
 		$difference = $this->calculateValueDifference($inputBasket, $deliverableBasket);
 
-		// 2. If the difference is less than zero, throw a RuntimeException("Valuation less than zero.")
-		if ($difference < 0)
-		{
-			throw new RuntimeException("Valuation is less than zero.");
-		}
-		// 3. Return the results from $this->handleValueDifference().
+		// 2. Return the results from $this->handleValueDifference().
 		return $this->handleValueDifference($difference);
 	}
 
@@ -47,7 +42,7 @@ class CommodityExchange
 	{
 		if ($difference < 0)
 		{
-			throw new RuntimeException("Valuation is less than zero.");
+			throw new CommodityException("INSUFFICIENT FUNDS: Input is worth less than deliverable.");
 		}
 
 		$frn2 = CommoditiesFactory::build("Federal Reserve Note");
