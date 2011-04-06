@@ -51,6 +51,6 @@ class CommoditiesFactory
 		}
 		else
 		{
-			Throw new RuntimeException ("No build process for that type of commodity");
+			throw new CommodityException("No build process for that type of commodity");
 		}
 }

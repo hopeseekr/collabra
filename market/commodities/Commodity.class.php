@@ -11,3 +11,10 @@ class Commodity
 	public $averageValuation;
 	public $storageSpecs;
 }
+
+// Create the custom commodity exception here, please.
+class CommodityException extends RuntimeException
+{
+}
+
+
