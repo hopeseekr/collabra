@@ -3,6 +3,36 @@
 // Monica Chase (chase.mona@gmail.com) | 5 April 2011
 // Copyright (c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
 
+/*
+The realization I made was that we really have commodity stores
+and not just commodities. A store is defined as multiple of the same
+commodity.*/
+class CommodityStore
+{
+	/** @var Commodity **/
+	public $commodity;
+	public $quantity = 0;
+
+	public function __construct(Commodity $commodity = null, $quantity = 1)
+	{
+		if ($commodity !== null)
+		{
+			$this->commodity = $commodity;
+			$this->quantity = $quantity;
+		}
+	}
+
+	public function calculateWorth()
+	{
+		if ($this->commodity === null) { return 0.00; }
+
+		// The (float) bit is called Type casting. There's an article on it
+		// in PHPU if interested.
+		return (float)$this->commodity->currentValuation * (float)$quantity;
+	}
+}
+
+
 class CommodityBasket
 {
 	// TODO: Determine a more descriptive name for array($commodity, $quantity)
@@ -42,17 +72,21 @@ class CommodityBasket
 
 		// Add a commodity + stats to $this->commoditiesQueue[]
 		// array($commodityName, $quantity, $commodity)
+		
+		// The following is a powerful language construct called
+		// "The terninary operator".
 
-		// Add to existing commodity if it exists.
-		if (isset($this->commoditiesQueue[$commodity->name]))
-		{
-			$this->commoditiesQueue[$commodity->name]['quantity'] += $commodity->quantity;
-		}
+		// Use existing CommodityStore or create a new one with 0
+		// quantity. (If quantity isn't 0, then you'll have 1 extra later.
+		$store = isset($this->commoditiesQueue[$commodity->name])
+			     ? $this->commoditiesQueue[$commodity->name]
+				 : new CommodityStore($commodity, 0);
 
-		$this->commoditiesQueue[$commodity->name] = array($commodity, 
-		                                                  $quantity);
+		$store->quantity += $quantity;
+		$this->commoditiesQueue[$commodity->name] = $store;
 	}
 	
+	/** @return CommodityStore **/
 	public function take()
 	{
 		if(empty($this->commoditiesQueue))
@@ -60,22 +94,28 @@ class CommodityBasket
 			throw new CommodityException("Your basket is empty");
 		}
 
-		$commodity = array_shift($this->commoditiesQueue);
+		$commodityStore = array_shift($this->commoditiesQueue);
 
-		return $commodity;
+		return $commodityStore;
 	}
 
 	/** dumpStats() returns the quantity, valuation, and total valuation of
 	  * each commodity in the basket. 
-	  *    array('name', 'valuation', 'quantity', 'total')
-
-	  * @return array
+	  *
+	  * @return array('name', 'valuation', 'quantity', 'total')
 	**/
 	public function dumpStats()
 	{
-		// 1. Loop through each array, performing calculations as needed.
-		foreach ($this->commoditiesQueue as $item)
+		// Loop through each array, performing calculations as needed.
+		$stats = array();
+		foreach ($this->commoditiesQueue as $commodityName => /** @var CommodityStore **/ $store)
 		{
+			$stats[] = array('name'      => $commodityName,
+			                 'valuation' => $store->commodity->currentValuation,
+			                 'quantity'  => $store->quantity,
+			                 'subtotal'  => $store->calculateWorth());
 		}
+
+		return $stats;
 	}
 }
