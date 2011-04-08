@@ -8,7 +8,7 @@ The realization I made was that we really have commodity stores
 and not just commodities. A store is defined as multiple of the same
 commodity.*/
 
-class CommodityBasket
+class CommoditiesBasket
 {
 	// TODO: Determine a more descriptive name for array($commodity, $quantity)
 	/** @var Commodity[] An array of Commodities **/
