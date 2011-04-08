@@ -118,4 +118,21 @@ class CommodityBasket
 
 		return $stats;
 	}
+
+	/** fetchCommodity($commodityName) returns a specific commodity store, if available.
+	  * @expect CommodityException[COMMODITY_NOT_FOUND]
+	  * @return CommodityStore
+	**/
+	public function fetchCommodity($commodityName)
+	{
+		// 1. Throw a CommodityException if the commodity is not in the basket.
+		if (!isset($this->commoditiesQueue[$commodityName]))
+		{
+			throw new CommodityException("Commodity Not Found");
+		}
+
+		// 2. Otherwise, return the commodity store.
+		return $this->commoditiesQueue[$commodityName];
+	}
 }
+
