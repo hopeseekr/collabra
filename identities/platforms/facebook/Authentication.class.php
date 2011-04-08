@@ -1,6 +1,6 @@
 <?php
 
-// Monica Chase (chase.mona@gmail.com) | 30 March 2011
+// Monica Chase (monica@phpexperts.pro) | 30 March 2011
 
 class Facebook_Authenticator
 {

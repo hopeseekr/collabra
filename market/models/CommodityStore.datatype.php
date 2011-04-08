@@ -1,6 +1,6 @@
 <?php
 
-// Monica Chase (chase.mona@gmail.com) | 5 April 2011
+// Monica Chase (monica@phpexperts.pro) | 5 April 2011
 // Copyright (c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
 
 /*

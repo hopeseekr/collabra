@@ -7,7 +7,7 @@ require '../managers/Authentication.class.php';
 
 
 
-// Revision 1 (31 March 2011) | Monica Chase (chase.mona@gmail.com)
+// Revision 1 (31 March 2011) | Monica Chase (monica@phpexperts.pro)
 //
 // Type "i" to get into insert mode...
 

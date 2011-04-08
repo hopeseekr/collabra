@@ -1,6 +1,6 @@
 <?php
 
-// Monica Chase (chase.mona@gmail.com) | 31 March 2011
+// Monica Chase (monica@phpexperts.pro) | 31 March 2011
 
 	class User
 	{

@@ -1,7 +1,7 @@
 <?php
 
-// CREATED BY: Monica Chase (chase.mona@gmail.com) | 30 March 2011
-// Revision 1 (31 March 2011) | Monica Chase (chase.mona@gmail.com)
+// CREATED BY: Monica Chase (monica@phpexperts.pro) | 30 March 2011
+// Revision 1 (31 March 2011) | Monica Chase (monica@phpexperts.pro)
 //
 // @purpose to determine whether any given user has read access to any given URL
 //
