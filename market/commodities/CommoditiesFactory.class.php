@@ -11,7 +11,7 @@ class CommoditiesFactory
 	{
 		if ($commodityName == "Silver")
 		{
-			$silver = new CommoditiesBasket;
+			$silver = new Commodity;
 			$silver->name = "Silver";
 			$silver->type = "precious metal";
 			$silver->currentValuation = 45.00;
@@ -31,16 +31,16 @@ class CommoditiesFactory
 		}
 		else if ($commodityName == "Federal Reserve Note")
 		{
-			$frn = new CommoditiesBasket;
+			$frn = new Commodity;
 			$frn->name = "Federal Reserve Note";
 			$frn->type = "fiat paper";
 			$frn->currentValuation = 1.00;
 			$frn->averageValuation = 1.00;
 
 			$frnSpecs = new StorageSpecs;
-			$frnspecs->isVirtual = true;
+			$frnSpecs->isVirtual = true;
 			$frnSpecs->weight = 1.0000;
-			$frnSpecs->dimensions = array('width' => 15.5956, 'height' => 6.6294, 'depth' =>
+			$frnSpecs->dimensions = array('width' => 15.5956, 'height' => 6.6294, 'depth' => 0.010922);
 			$frnSpecs->fragility = 70;
 			$frnSpecs->toxicity = 5.00;
 			$frnSpecs->expiresAfter = "0000-00-00 00:00:00";
@@ -53,4 +53,5 @@ class CommoditiesFactory
 		{
 			throw new CommodityException("No build process for that type of commodity");
 		}
+	}
 }

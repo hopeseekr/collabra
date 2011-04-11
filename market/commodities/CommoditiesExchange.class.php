@@ -13,11 +13,11 @@ class CommodityExchange
 
 	public static function getInstance ()
 	{
-		if(is_null($this->instance))
+		if(is_null(self::$instance))
 		{
-			$this->instance = new CommodityExchange;
+			self::$instance = new CommodityExchange;
 		}
-		return $this->instance;
+		return self::$instance;
 	}
 
 	public function exchange(CommoditiesBasket $inputBasket, CommoditiesBasket $deliverableBasket)
@@ -30,9 +30,9 @@ class CommodityExchange
 	}
 
 	/** @return float The valuation difference between two commodities **/
-	public static function calculateValueDifferential(CommoditiesBasket $inputBasket, CommoditiesBasket $deliverableBasket)
+	public static function getValueDifferential(CommoditiesBasket $inputBasket, CommoditiesBasket $deliverableBasket)
 	{
-		$difference = $inputBasket->currentValuation - $deliverableBasket->currentValuation;
+		$difference = $inputBasket->getTotalValuation() - $deliverableBasket->getTotalValuation();
 
 		return $difference;
 	}

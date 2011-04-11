@@ -109,5 +109,32 @@ class CommoditiesBasket
 		// 2. Otherwise, return the commodity store.
 		return $this->commoditiesQueue[$commodityName];
 	}
+
+	public function getTotalValuation()
+	{
+		$valuation = 0.00;
+
+		foreach ($this->commoditiesQueue as 
+				/** @var CommodityStore **/ $commodityStore)
+		{
+			$valuation += (float)$commodityStore->calculateWorth();
+		}
+
+		return $valuation;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

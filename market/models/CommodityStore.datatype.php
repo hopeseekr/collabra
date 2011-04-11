@@ -29,7 +29,7 @@ class CommodityStore
 
 		// The (float) bit is called Type casting. There's an article on it
 		// in PHPU if interested.
-		return (float)$this->commodity->currentValuation * (float)$quantity;
+		return (float)$this->commodity->currentValuation * (float)$this->quantity;
 	}
 }
 
