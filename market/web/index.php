@@ -7,6 +7,10 @@ Goal: To develop the basic HTML for the main widgets.
      o Form to register a loan in FRNs.
      o Form to secure a commodity for a monthly loan payment.
  */
+// First thing you have to do when using sessions is to start a session.
+session_start();
+
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -42,6 +46,7 @@ Goal: To develop the basic HTML for the main widgets.
 							<label for="payment_quantity">Quantity:</label>
 							<input type="text" id="payment_quantity" name="payment_quantity"/>
 						</div>
+						<div><input type="submit" class="inputSubmit" value="add"/></div>
 					</fieldset>
 				</form>
 			</div>
@@ -73,6 +78,40 @@ Goal: To develop the basic HTML for the main widgets.
 							<label for="loan_interest_rate">Interest rate:</label>
 							<input type="text" id="loan_interest_rate" name="loan_interest_rate" size="6"/>
 						</div>
+						<div><input type="submit" class="inputSubmit" value="add"/></div>
+					</fieldset>
+				</form>
+			</div>
+<?php
+
+?>
+			<div id="make_payment">
+				<h2>Make a payment</h2>
+				<form method="post" action="make_payment.php">
+					<fieldset>
+						<div class="required">
+							<label for="target_loan">Target loan:</label>
+							<select id="target_loan" name="target_loan">
+								<!-- TODO: This needs to be dynamically-populated! -->
+								<option> --- Select --- </option>
+							</select>
+						</div>
+
+						<div class="required">
+							<label for="payment_commodity">Payment commodity:</label>
+							<select id="payment_commodity" name="payment_commodity">
+								<!-- TODO: This needs to be dynamically-populated! -->
+								<option> --- Select --- </option>
+								<option>Silver</option>
+								<option>FRN (a.k.a. USD)</option>
+							</select>
+						</div>
+
+						<div class="required">
+							<label for="payment_quantity">Amount:</label>
+							<input type="text" id="loan_quantity" name="loan_quantity"/>
+						</div>
+						<div><input type="submit" class="inputSubmit" value="add"/></div>
 					</fieldset>
 				</form>
 			</div>
