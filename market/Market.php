@@ -10,7 +10,7 @@ class Market
 	private function __construct() { }
 	public static function init()
 	{
-		define('CARS_LIB_PATH', dirname(__FILE__));
+		define('CMARKET_LIB_PATH', dirname(__FILE__));
 
 		include CARS_LIB_PATH . '/models/Commodity.datatype.php';
 		include CARS_LIB_PATH . '/models/CommodityStore.datatype.php';
