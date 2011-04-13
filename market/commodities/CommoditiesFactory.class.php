@@ -51,7 +51,7 @@ class CommoditiesFactory
 		}
 		else
 		{
-			throw new CommodityException("No build process for that type of commodity");
+			throw new CommodityException("No build process for a commodity called " . htmlspecialchars($commodityName));
 		}
 	}
 }

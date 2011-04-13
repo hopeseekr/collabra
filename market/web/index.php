@@ -37,8 +37,8 @@ session_start();
 							<select id="payment_commodity" name="payment_commodity">
 								<!-- TODO: This needs to be dynamically-populated! -->
 								<option> --- Select --- </option>
-								<option>Silver</option>
-								<option>FRN (a.k.a. USD)</option>
+								<option value="Silver">Silver</option>
+								<option value="Federal Reserve Note">FRN (a.k.a. USD)</option>
 							</select>
 						</div>
 
@@ -59,8 +59,8 @@ session_start();
 							<select id="loan_commodity" name="loan_commodity">
 								<!-- TODO: This needs to be dynamically-populated! -->
 								<option> --- Select --- </option>
-								<option>Silver</option>
-								<option>FRN (a.k.a. USD)</option>
+								<option value="Silver">Silver</option>
+								<option value="Federal Reserve Note">FRN (a.k.a. USD)</option>
 							</select>
 						</div>
 
@@ -83,7 +83,9 @@ session_start();
 				</form>
 			</div>
 <?php
-
+// Only show if both loans and payments are registered.
+if (isset($_SESSION['loans']) && isset($_SESSION['payments']))
+{
 ?>
 			<div id="make_payment">
 				<h2>Make a payment</h2>
@@ -115,6 +117,9 @@ session_start();
 					</fieldset>
 				</form>
 			</div>
+<?php
+}
+?>
 		</div>
 	</body>
 </html>

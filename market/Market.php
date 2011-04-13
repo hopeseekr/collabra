@@ -12,11 +12,11 @@ class Market
 	{
 		define('CMARKET_LIB_PATH', dirname(__FILE__));
 
-		include CARS_LIB_PATH . '/models/Commodity.datatype.php';
-		include CARS_LIB_PATH . '/models/CommodityStore.datatype.php';
-		include CARS_LIB_PATH . '/commodities/CommoditiesBasket.class.php';
-		include CARS_LIB_PATH . '/commodities/CommoditiesExchange.class.php';
-		include CARS_LIB_PATH . '/commodities/CommoditiesFactory.class.php';
+		include CMARKET_LIB_PATH . '/models/Commodity.datatype.php';
+		include CMARKET_LIB_PATH . '/models/CommodityStore.datatype.php';
+		include CMARKET_LIB_PATH . '/commodities/CommoditiesBasket.class.php';
+		include CMARKET_LIB_PATH . '/commodities/CommoditiesExchange.class.php';
+		include CMARKET_LIB_PATH . '/commodities/CommoditiesFactory.class.php';
 			
 	}
 }
