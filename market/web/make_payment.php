@@ -37,15 +37,10 @@ echo '<pre>', print_r($_SESSION, true), '</pre>';
 // So right now, we have a $_SESSION[] array filled with arrays of payments nad 
 // loans.  The keys to the arrays are numbers starting at zero. OK? ok
 
-$loan = $_SESSION[$targetLoanID];
+$loanStore = $_SESSION['loans'][$targetLoanID];
+$paymentStore = $_SESSION['payments'][$paymentID];
 
-// What happens if the $targetLoanID is blank or doesnt exist in the $_SESSION?
-// You can't make a payment. Right but what will PHP do right now w/ the code we have?
-// Return the error? Yeah it will say something like "Warning: $_SESSION[2] is not defined".
-// But it wont stop the script, so that leads us (atm) open to attack at worse and an unknown
-// state of execution at best. So how do we fix this? Exception against what? No input
-// and? $targetLoanID not existing in $_SESSION! right. What do we call these checks? 
-// sanity and where do they go? At the beginning right! ok I'm proud of you for remembering ;) 
+//$differential = $loanStore->currentValu
 
 // 4. Redirect back to the main page.
 // FIXME: Needs a proper dynamic URL generator.
