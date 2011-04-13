@@ -15,6 +15,12 @@ session_start();
 $commodityName = filter_input(INPUT_POST, 'payment_commodity', FILTER_SANITIZE_STRING);
 $quantity = filter_input(INPUT_POST, 'payment_quantity', FILTER_SANITIZE_NUMBER_FLOAT);
 
+// 1.1. Sanity checks.
+if (!IS_STRING($commodityName)) { throw new InvalidArgumentException("Commodity Name must be a string"); }
+if (!IS_NUMERIC($quantity)) { throw new InvalidArgumentException("Quantity must be a float"); }
+
+if ($quantity <= 0) { throw new OutOfBoundsException("The payment commodity quantity must be more than 0."); }
+
 // 2. Build the commodity.
 try
 {

@@ -17,6 +17,16 @@ $quantity      = filter_input(INPUT_POST, 'loan_quantity',      FILTER_SANITIZE_
 $loanTerm      = filter_input(INPUT_POST, 'loan_term',          FILTER_SANITIZE_NUMBER_INT);
 $interestRate  = filter_input(INPUT_POST, 'loan_interest_rate', FILTER_SANITIZE_NUMBER_FLOAT);
 
+// 1.1. Sanity checks.
+if (!IS_STRING($commodityName)) { throw new InvalidArgumentException("Commodity name must be a string"); }
+if (!IS_NUMERIC($quantity)) { throw new InvalidArgumentException("Quantity must be a float"); }
+if (!IS_INT($loanTerm)) { throw new InvalidArgumentException("Loan term must be an integer"); }
+if (!IS_NUMERIC($interestRate)) { throw new InvalidArgumentException("Interest rate must be a float"); }
+
+if ($quantity <= 0) { throw new OutOfBoundsException("The loan commodity quantity must be more than 0."); }
+if ($loanTerm <= 0) { throw new OutOfBoundsException("The loan tern must be more than 0."); }
+if ($interestRate <= 0) { throw new OutOfBoundsException("The interest rate must be more than 0."); }
+
 // 2. Build the commodity.
 try
 {
