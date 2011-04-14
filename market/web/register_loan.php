@@ -14,7 +14,7 @@ session_start();
 // 1. Grab the form data.
 $commodityName = filter_input(INPUT_POST, 'loan_commodity',     FILTER_SANITIZE_STRING);
 $quantity      = filter_input(INPUT_POST, 'loan_quantity',      FILTER_SANITIZE_NUMBER_FLOAT);
-$loanTerm      = filter_input(INPUT_POST, 'loan_term',          FILTER_SANITIZE_NUMBER_INT);
+$loanTerm      = (int)filter_input(INPUT_POST, 'loan_term',     FILTER_SANITIZE_NUMBER_INT);
 $interestRate  = filter_input(INPUT_POST, 'loan_interest_rate', FILTER_SANITIZE_NUMBER_FLOAT);
 
 // 1.1. Sanity checks.

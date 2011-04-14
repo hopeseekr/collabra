@@ -12,9 +12,9 @@ if(!isset($_POST))
 session_start();
 
 // 1. Grab the form data.
-$paymentID     = filter_input(INPUT_POST, 'payment_commodity', FILTER_SANITIZE_NUMBER_INT);
-$targetLoanID  = filter_input(INPUT_POST, 'target_loan',       FILTER_SANITIZE_NUMBER_INT);
-$amount        = filter_input(INPUT_POST, 'loan_quantity',     FILTER_SANITIZE_NUMBER_FLOAT);
+$paymentID     = (int)filter_input(INPUT_POST, 'payment_commodity', FILTER_SANITIZE_NUMBER_INT);
+$targetLoanID  = (int)filter_input(INPUT_POST, 'target_loan',       FILTER_SANITIZE_NUMBER_INT);
+$amount        = filter_input(INPUT_POST, 'loan_quantity',          FILTER_SANITIZE_NUMBER_FLOAT);
 
 // 1.1. Sanity checks.
 if (!is_int($targetLoanID)) { throw new InvalidArgumentException("Target Loan ID must be an integer."); }
@@ -30,19 +30,52 @@ if (!isset($_SESSION['loans'][$targetLoanID])) { throw new InvalidArgumentExcept
 
 if ($amount <= 0) { throw new OutOfBoundsException("The payment commodity amount must be more than 0."); }
 
-echo '<pre>', print_r($_SESSION, true), '</pre>';
+echo 'BEforE: <pre>', print_r($_SESSION, true), '</pre>';
 
 // 2. Pay the loan.
 // ok watch . I'm going to remove it then assist you (if needed) in recreating.
 // So right now, we have a $_SESSION[] array filled with arrays of payments nad 
 // loans.  The keys to the arrays are numbers starting at zero. OK? ok
 
-$loanStore = $_SESSION['loans'][$targetLoanID];
+$loanStore = clone $_SESSION['loans'][$targetLoanID];
 $paymentStore = $_SESSION['payments'][$paymentID];
 
-//$differential = $loanStore->currentValu
+$comex = CommoditiesExchange::getInstance();
 
+# A class' public functions should ONLY directly aid in accomplishing the goals of the class.
+# A class' functions should NEVER be made public out of "coding convenience", as this is a sure 
+# sign of improper design and a breaking of Encapsulation. 
+
+try
+{
+	$FRNs = $comex->exchange($paymentStore, $loanStore);
+}
+catch(CommoditiesException $e)
+{
+	// Since we expect the possibilty of the loan not being paid off in full,
+	// we're just going to ignore this exception but re-throw any others.
+	if ($e->getMessage() != "INSUFFICIENT FUNDS: Input is worth less than deliverable.")
+	{
+		throw $e;
+	}
+}
+
+// 3. Update the loan amount.
+// TODO: This really needs to be stored in a database.
+$loanStore = CommoditiesFactory::build($loanStore->commodity->name, $FRNs->quantity);
+
+// Prevent a memory leak by unsetting the old loan object.
+unset($_SESSION['loans'][$targetLoanID]);
+// Store the new loan object in the session.
+$_SESSION['loans'][$targetLoanID] = $loanStore;
+
+// 4. Zero-out the payment.
+unset($_SESSION['payments'][$paymentID]);
+
+
+echo 'AFTER: <pre>', print_r($_SESSION, true), '</pre>';
 // 4. Redirect back to the main page.
 // FIXME: Needs a proper dynamic URL generator.
 //header('Location: http://www.phpu.cc/collabra/market/web/');
+
 

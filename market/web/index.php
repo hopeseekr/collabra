@@ -7,10 +7,15 @@ Goal: To develop the basic HTML for the main widgets.
      o Form to register a loan in FRNs.
      o Form to secure a commodity for a monthly loan payment.
  */
+
+// 0. Initialize Market.
+require '../Market.php';
+Market::init();
+
 // First thing you have to do when using sessions is to start a session.
 session_start();
 
-
+//echo '<pre>', print_r($_SESSION, true), '</pre>';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -95,7 +100,18 @@ if (isset($_SESSION['loans']) && isset($_SESSION['payments']))
 							<label for="target_loan">Target loan:</label>
 							<select id="target_loan" name="target_loan">
 								<!-- TODO: This needs to be dynamically-populated! -->
-								<option> --- Select --- </option>
+								<option value=""> --- Select --- </option>
+<?php
+	foreach ($_SESSION['loans'] as $id => $loanStore)
+	{
+		$loanLine = sprintf('%s (%.2f)', 
+		                    $loanStore->commodity->name,
+		                    $loanStore->quantity);
+?>
+								<option value="<?php echo $id; ?>"><?php echo $loanLine; ?></option>
+<?php
+	}
+?>
 							</select>
 						</div>
 
@@ -103,7 +119,7 @@ if (isset($_SESSION['loans']) && isset($_SESSION['payments']))
 							<label for="payment_commodity">Payment commodity:</label>
 							<select id="payment_commodity" name="payment_commodity">
 								<!-- TODO: This needs to be dynamically-populated! -->
-								<option> --- Select --- </option>
+								<option value=""> --- Select --- </option>
 								<option>Silver</option>
 								<option>FRN (a.k.a. USD)</option>
 							</select>
