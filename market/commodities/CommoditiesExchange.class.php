@@ -11,23 +11,10 @@ class CommodityExchange
 {
 	private static $instance;
 
-	private function __construct()
-	{
-	}
-
-	public static function getInstance ()
-	{
-		if(is_null(self::$instance))
-		{
-			self::$instance = new CommodityExchange;
-		}
-		return self::$instance;
-	}
-
 	public function exchange(CommoditiesBasket $inputBasket, CommoditiesBasket $deliverableBasket)
 	{
 		// 1. Obtain the valuation difference for the two commodities.
-		$difference = self::calculateValueDifferential($inputBasket, $deliverableBasket);
+		$difference = self::getValueDifferential($inputBasket, $deliverableBasket);
 
 		// 2. Return the results from $this->handleValueDifference().
 		return $this->handleValueDifference($difference);
@@ -41,23 +28,17 @@ class CommodityExchange
 		return $difference;
 	}
 	
-	/** @return CommoditiesBasket Returns the difference as Federal Reserve Notes.**/
+	/** @return CommodityStore Returns the difference as Federal Reserve Notes.**/
 	protected function handleValueDifference($difference)
 	{
+		$frn = CommoditiesFactory::build("Federal Reserve Note");
+		$frnStore = new CommodityStore($frn, $difference);
+
 		if ($difference < 0)
 		{
 			throw new CommodityException("INSUFFICIENT FUNDS: Input is worth less than deliverable.");
 		}
 
-		$frn2 = CommoditiesFactory::build("Federal Reserve Note");
-		$frn2->currentValuation = $difference;
-		return $frn2;
+		return $frnStore;
 	}
-
-	/* Statistical getter */
-	public function fetchValueDifference(CommoditiesBasket $inputBasket, CommoditiesBasket $deliverableBasket)
-	{
-		return $this->calculateValueDifference($inputBasket, $deliverableBasket);
-	}
-	
 }
