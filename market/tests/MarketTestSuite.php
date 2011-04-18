@@ -37,61 +37,13 @@ class MarketTestSuite extends PHPUnit_Framework_TestSuite {
 		ob_start();
 		$this->setName('MarketTestSuite');
 		$this->addTestSuite('CommodityStoreTest');
-	}
-	
-		public function __construct()
-	{
-		ob_start();
-		$this->setName('MarketTestSuite');
 		$this->addTestSuite('CommoditiesFactoryTest');
-	}
-	
-		public function __construct()
-	{
-		ob_start();
-		$this->setName('MarketTestSuite');
 		$this->addTestSuite('CommoditiesBasketTest');
-	}
-	
-		public function __construct()
-	{
-		ob_start();
-		$this->setName('MarketTestSuite');
 		$this->addTestSuite('CommoditiesExchangeTest');
-	}
-	
-		public function __construct()
-	{
-		ob_start();
-		$this->setName('MarketTestSuite');
 		$this->addTestSuite('GenericControllerTest');
-	}
-	
-		public function __construct()
-	{
-		ob_start();
-		$this->setName('MarketTestSuite');
 		$this->addTestSuite('PaymentControllerTest');
-	}
-	
-		public function __construct()
-	{
-		ob_start();
-		$this->setName('MarketTestSuite');
 		$this->addTestSuite('LoanControllerTest');
-	}
-	
-		public function __construct()
-	{
-		ob_start();
-		$this->setName('MarketTestSuite');
 		$this->addTestSuite('PaymentManagerTest');
-	}
-	
-		public function __construct()
-	{
-		ob_start();
-		$this->setName('MarketTestSuite');
 		$this->addTestSuite('LoanManagerTest');
 	}
 	
