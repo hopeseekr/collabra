@@ -1,9 +1,12 @@
 <?php
-
-// Monica Chase (monica@phpexperts.pro) | 4 April 2011
-// Copyright (c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
-//
-// Creating the new Commodity objects for Silver and the Federal Reserve Note
+/** The Collabra Market Project
+  *   Part of the Collabra Commercial Collaboration Platform
+  *
+  * Copyright(c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
+  * Copyright(c) 2011 Monica A. Chase <monica@phpexperts.pro>
+  * All rights reserved.
+ **/
+ 
 /*
 require '../commodities/Commodity.class.php';
 require '../storage/StorageSpecs.class.php';

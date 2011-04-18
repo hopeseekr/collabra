@@ -1,12 +1,11 @@
 <?php
-
-// Monica Chase (monica@phpexperts.pro) | 5 April 2011
-// Copyright (c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
-
-/*
-The realization I made was that we really have commodity stores
-and not just commodities. A store is defined as multiple of the same
-commodity.*/
+/** The Collabra Market Project
+  *   Part of the Collabra Commercial Collaboration Platform
+  *
+  * Copyright(c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
+  * Copyright(c) 2011 Monica A. Chase <monica@phpexperts.pro>
+  * All rights reserved.
+ **/
 
 class CommoditiesBasket
 {

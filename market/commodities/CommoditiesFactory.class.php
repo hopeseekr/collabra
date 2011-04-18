@@ -1,9 +1,11 @@
 <?php
-
-// Monica Chase (monica@phpexperts.pro) | 4 April 2011
-// Copyright (c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
-// Commodities factory (generic)
-// Hard-coded for "Silver" and "Federal Reserve Note"
+/** The Collabra Market Project
+  *   Part of the Collabra Commercial Collaboration Platform
+  *
+  * Copyright(c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
+  * Copyright(c) 2011 Monica A. Chase <monica@phpexperts.pro>
+  * All rights reserved.
+ **/
 
 class CommoditiesFactory
 {
