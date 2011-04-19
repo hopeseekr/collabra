@@ -36,7 +36,7 @@ class PaymentController implements CommandI
 		}
 
 		$commodityName = fRequest::post('payment_commodity', 'string');
-		$quantity = fRequest::post(INPUT_POST, 'payment_quantity', 'float');
+		$quantity = fRequest::post('payment_quantity', 'float');
 
 		// 2. Build the payment basket.
 		$bookie = new PaymentManager;
