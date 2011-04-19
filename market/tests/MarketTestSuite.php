@@ -40,7 +40,7 @@ class MarketTestSuite extends PHPUnit_Framework_TestSuite {
 		$this->addTestSuite('CommoditiesBasketTest');
 		$this->addTestSuite('CommoditiesFactoryTest');
 		$this->addTestSuite('CommoditiesExchangeTest');
-//		$this->addTestSuite('GenericControllerTest');
+		$this->addTestSuite('GenericControllerTest');
 //		$this->addTestSuite('PaymentControllerTest');
 //		$this->addTestSuite('LoanControllerTest');
 //		$this->addTestSuite('PaymentManagerTest');

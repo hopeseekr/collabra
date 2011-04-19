@@ -25,11 +25,14 @@ class Market
 
 		include CMARKET_LIB_PATH . '/models/Commodity.datatype.php';
 		include CMARKET_LIB_PATH . '/models/CommodityStore.datatype.php';
+		include CMARKET_LIB_PATH . '/models/ActionsList.datatype.php';
+
 		include CMARKET_LIB_PATH . '/commodities/CommoditiesBasket.class.php';
 		include CMARKET_LIB_PATH . '/commodities/CommoditiesExchange.class.php';
 		include CMARKET_LIB_PATH . '/commodities/CommoditiesFactory.class.php';
 
 		include CMARKET_LIB_PATH . '/controllers/ControllerCommander.class.php';
+		include CMARKET_LIB_PATH . '/controllers/Generic.class.php';
 		include CMARKET_LIB_PATH . '/controllers/Loan.class.php';
 		include CMARKET_LIB_PATH . '/controllers/Payment.class.php';
 
