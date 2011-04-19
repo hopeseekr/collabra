@@ -21,7 +21,7 @@ class ControllerCommander
 
 	protected static function fetchAction()
 	{
-		$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
+		$action = fRequest::get('action', 'string');
 
 		if (empty($action) || is_string($action))
 		{

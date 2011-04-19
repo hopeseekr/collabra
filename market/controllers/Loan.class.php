@@ -37,10 +37,10 @@ class LoanController implements CommandI
 			throw new ControllerException("No user input", ControllerException::INVALID_USER_INPUT);
 		}
 
-		$commodityName = filter_input(INPUT_POST, 'loan_commodity',     FILTER_SANITIZE_STRING);
-		$quantity      = filter_input(INPUT_POST, 'loan_quantity',      FILTER_SANITIZE_NUMBER_FLOAT);
-		$loanTerm      = (int)filter_input(INPUT_POST, 'loan_term',     FILTER_SANITIZE_NUMBER_INT);
-		$interestRate  = filter_input(INPUT_POST, 'loan_interest_rate', FILTER_SANITIZE_NUMBER_FLOAT);
+		$commodityName = fRequest::post('loan_commodity',     'string');
+		$quantity      = fRequest::post('loan_quantity',      'float');
+		$loanTerm      = fRequest::post('loan_term',          'integer');
+		$interestRate  = fRequest::post('loan_interest_rate', 'float');
 
 		return array($commodityName, $quantity, $loanTerm, $interestRate);
 	}

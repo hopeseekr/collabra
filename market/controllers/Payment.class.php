@@ -35,8 +35,8 @@ class PaymentController implements CommandI
 			throw new ControllerException("No user input", ControllerException::INVALID_USER_INPUT);
 		}
 
-		$commodityName = filter_input(INPUT_POST, 'payment_commodity', FILTER_SANITIZE_STRING);
-		$quantity = filter_input(INPUT_POST, 'payment_quantity', FILTER_SANITIZE_NUMBER_FLOAT);
+		$commodityName = fRequest::post('payment_commodity', 'string');
+		$quantity = fRequest::post(INPUT_POST, 'payment_quantity', 'float');
 
 		// 2. Build the payment basket.
 		$bookie = new PaymentManager;
@@ -50,9 +50,9 @@ class PaymentController implements CommandI
 	{
 		// 1. Grab the form data.
 		// FIXME: This is a great candidate for the Strategy Pattern.
-		$paymentID     = (int)filter_input(INPUT_POST, 'payment_commodity', FILTER_SANITIZE_NUMBER_INT);
-		$loanID        = (int)filter_input(INPUT_POST, 'target_loan',       FILTER_SANITIZE_NUMBER_INT);
-		$amount        = filter_input(INPUT_POST, 'loan_quantity',          FILTER_SANITIZE_NUMBER_FLOAT);
+		$paymentID     = fRequest::post('payment_commodity', 'integer');
+		$loanID        = fRequest::post('target_loan',       'integer');
+		$amount        = fRequest::post('loan_quantity',     'float');
 
 		// Sanity checks.
 		$this->ensureSaneInputs_MP($paymentID, $loanID, $amount);
