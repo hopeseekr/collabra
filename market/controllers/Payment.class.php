@@ -11,17 +11,22 @@ class PaymentController implements CommandI
 {
 	public function execute($action)
 	{
+		// These actions dont actually return any HTML. They should,
+		// instead redirect back to the home page. -Theo 2011-04-19
 		if ($action == ActionsList::CREATE_PAYMENT_BASKET)
 		{
-			return $this->createPaymentBasket();
+			$this->createPaymentBasket();
 		}
-		else if ($action == ActionList::MAKE_PAYMENT)
+		else if ($action == ActionsList::MAKE_PAYMENT)
 		{
-			return $this->makePayment();
+			$this->makePayment();
 		}
+
+		$generic = new GenericController;
+		$generic->execute(ActionsList::SHOW_HOME);
 	}
 
-    public function createPaymentBasket()
+    protected function createPaymentBasket()
 	{
 		// 1. Grab the form data.
 		// FIXME: This is a great candidate for the Strategy Pattern.
@@ -41,7 +46,7 @@ class PaymentController implements CommandI
 		$_SESSION['payments'][] = $paymentBasket;
 	}
 
-    public function makePayment()
+    protected function makePayment()
 	{
 		// 1. Grab the form data.
 		// FIXME: This is a great candidate for the Strategy Pattern.

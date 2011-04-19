@@ -36,6 +36,8 @@ class Market
 		include CMARKET_LIB_PATH . '/controllers/Loan.class.php';
 		include CMARKET_LIB_PATH . '/controllers/Payment.class.php';
 
+		include CMARKET_LIB_PATH . '/managers/Payment.class.php';
+		include CMARKET_LIB_PATH . '/managers/Loan.class.php';
 	}
 }
 

@@ -12,7 +12,7 @@ class PaymentManager
 	/**
 	  * @param string $commodityName
 	  * @param float $quantity
-	  * @return CommodityStore
+	  * @return CommodityBasket
 	  */
     public function buildPaymentBasket($commodityName, $quantity)
 	{
@@ -20,9 +20,12 @@ class PaymentManager
 		$this->ensureSaneInputs_BPB($commodityName, $quantity);
 
 		// 2. Build the commodity.
-		$commodityStore = CommoditiesFactory::build($commodityName, $quantity);
+		$commodity = CommoditiesFactory::build($commodityName);
 
-		return $commodityStore;
+		// 3. Build the basket.
+		$basket = new CommoditiesBasket($commodity, $quantity);
+
+		return $basket;
 	}
 
 	// FIXME: This is a great candidate for the Strategy Pattern.

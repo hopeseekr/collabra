@@ -69,6 +69,11 @@ class GenericControllerTest extends PHPUnit_Extensions_OutputTestCase
 		$this->controller->execute(ActionsList::SHOW_HOME);
 	}
 
+    public function testWillShowMonicasBoobsToTheo()
+	{
+		// This goes to false if it doesn't actually happen ;p
+		$this->assertTrue(true);
+	}
 
 	public function testWillShow404PageOnDemand()
 	{
