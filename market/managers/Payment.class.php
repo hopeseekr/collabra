@@ -53,7 +53,7 @@ class PaymentManager
 		// 2. Pay the loan.
 		// loans.  The keys to the arrays are numbers starting at zero. OK? ok
 
-		$comex = CommoditiesExchange::getInstance();
+		$comex = new CommoditiesExchange;
 
 # A class' public functions should ONLY directly aid in accomplishing the goals of the class.
 # A class' functions should NEVER be made public out of "coding convenience", as this is a sure
@@ -75,7 +75,9 @@ class PaymentManager
 
 		// 3. Update the loan amount.
 		// TODO: This really needs to be stored in a database.
-		$modifiedLoanBasket = CommoditiesFactory::build($loanBasket->commodity->name, $FRNs->quantity);
+		$loanStore = $loanBasket->take();
+		$modifiedLoanCommodity = CommoditiesFactory::build($loanStore->commodity->name);
+		$modifiedLoanBasket = new CommoditesBasket($modifiedLoanCommodity, $FRNs->quantity);
 
 		return $modifiedLoanBasket;
 	}

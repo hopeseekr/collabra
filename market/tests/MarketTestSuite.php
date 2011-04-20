@@ -36,15 +36,23 @@ class MarketTestSuite extends PHPUnit_Framework_TestSuite {
 	{
 		ob_start();
 		$this->setName('MarketTestSuite');
+
+		// Test Datatypes.
 		$this->addTestSuite('CommodityStoreTest');
+
+		// Test core commodity responsibilities.
 		$this->addTestSuite('CommoditiesBasketTest');
 		$this->addTestSuite('CommoditiesFactoryTest');
 		$this->addTestSuite('CommoditiesExchangeTest');
+
+		// Test the managers.
+		$this->addTestSuite('PaymentManagerTest');
+//		$this->addTestSuite('LoanManagerTest');
+
+		// Test the controllers and views.
 		$this->addTestSuite('GenericControllerTest');
 		$this->addTestSuite('PaymentControllerTest');
 //		$this->addTestSuite('LoanControllerTest');
-//		$this->addTestSuite('PaymentManagerTest');
-//		$this->addTestSuite('LoanManagerTest');
 	}
 	
 	/**

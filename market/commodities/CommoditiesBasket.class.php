@@ -113,6 +113,11 @@ class CommoditiesBasket
 	{
 		$valuation = 0.00;
 
+		if (empty($this->commoditiesQueue))
+		{
+			return 0.00;
+		}
+
 		foreach ($this->commoditiesQueue as 
 				/** @var CommodityStore **/ $commodityStore)
 		{

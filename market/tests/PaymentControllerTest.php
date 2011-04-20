@@ -89,13 +89,16 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 	public function testWillCreateAPaymentBasket()
 	{
 		// Build the input parameters.
+		$_SERVER['REQUEST_METHOD'] = 'post';
 		$_POST = array('payment_commodity' => 'Silver',
 		               'payment_quantity'  => 1);
 	
 		// Build the expected value.
-		$expectedValue = array('Silver' => $this->buildPaymentBasket('Silver', 1));
+		$homePageHTML = $this->grabPageHTML('home');
+		$expectedValue = $this->buildPaymentBasket('Silver', 1);
+		$this->expectOutputString($homePageHTML);
 	
-		$returnedValue = $this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
+		$this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
 
 		// Make sure the session object has been created and is an array.
 		$this->assertTrue(isset($_SESSION['payments']) && is_array($_SESSION['payments']));
@@ -103,8 +106,33 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 		// Make sure the payments array is not empty.
 		$this->assertTrue(!empty($_SESSION['payments']));
 
-		print_r($_SESSION['payments'][0]); exit;
 		$this->assertEquals($expectedValue, $_SESSION['payments'][0]);
 	}
+
+	public function testWillMakeAPayment()
+	{
+		// We're currently testing the PaymentController, but MakeAPayment
+		// requires PaymentManager to work. So this means that we either have
+		// to unit test PaymentManager first or make the code less brittle.
+		// Which do you prefer? unit test PaymentManager.
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

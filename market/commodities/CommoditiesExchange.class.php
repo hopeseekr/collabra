@@ -7,7 +7,7 @@
   * All rights reserved.
  **/
  
-class CommodityExchange
+class CommoditiesExchange
 {
 	private static $instance;
 

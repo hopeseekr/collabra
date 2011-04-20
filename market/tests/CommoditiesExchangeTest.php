@@ -19,7 +19,7 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$this->exchange = new CommodityExchange;
+		$this->exchange = new CommoditiesExchange;
 		parent::setUp();
 	}
 
@@ -73,6 +73,7 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 
 	}
 }
+
 
 
 
