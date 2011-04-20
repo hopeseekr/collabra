@@ -20,6 +20,10 @@ class Market
 
 		define('CMARKET_LIB_PATH', dirname(__FILE__));
 
+		// Init the Flourish library.
+		include CMARKET_LIB_PATH . '/lib/flourish/Flourish.php';
+		Flourish::init();
+
 		include CMARKET_LIB_PATH . '/api/Command.interface.php';
 		include CMARKET_LIB_PATH . '/api/View.interface.php';
 
