@@ -360,6 +360,86 @@ class fRequest
 		return $token;
 	}
 	
+	static public function get($key, $cast_to=NULL, $default_value=NULL)
+	{
+		$value = $default_value;
+		
+		$array_dereference = NULL;
+		if (strpos($key, '[')) {
+			$bracket_pos       = strpos($key, '[');
+			$array_dereference = substr($key, $bracket_pos);
+			$key               = substr($key, 0, $bracket_pos);
+		}
+		
+		if (isset($_GET[$key])) {
+			$value = $_GET[$key];
+		}
+		
+		if ($array_dereference) {
+			preg_match_all('#(?<=\[)[^\[\]]+(?=\])#', $array_dereference, $array_keys, PREG_SET_ORDER);
+			$array_keys = array_map('current', $array_keys);
+			foreach ($array_keys as $array_key) {
+				if (!is_array($value) || !isset($value[$array_key])) {
+					$value = $default_value;
+					break;
+				}
+				$value = $value[$array_key];
+			}
+		}
+		
+		// This allows for data_type? casts to allow NULL through
+		if ($cast_to !== NULL && substr($cast_to, -1) == '?') {
+			if ($value === NULL || $value === '') {
+				return NULL;
+			}	
+			$cast_to = substr($cast_to, 0, -1);
+		}
+		
+		return self::cast($value, $cast_to);
+	}
+	
+	static public function post($key, $cast_to=NULL, $default_value=NULL)
+	{
+		self::initPutDelete();
+		
+		$value = $default_value;
+		
+		$array_dereference = NULL;
+		if (strpos($key, '[')) {
+			$bracket_pos       = strpos($key, '[');
+			$array_dereference = substr($key, $bracket_pos);
+			$key               = substr($key, 0, $bracket_pos);
+		}
+		
+		if (isset(self::$put_delete[$key])) {
+			$value = self::$put_delete[$key];
+		} elseif (isset($_POST[$key])) {
+			$value = $_POST[$key];
+		}
+		
+		if ($array_dereference) {
+			preg_match_all('#(?<=\[)[^\[\]]+(?=\])#', $array_dereference, $array_keys, PREG_SET_ORDER);
+			$array_keys = array_map('current', $array_keys);
+			foreach ($array_keys as $array_key) {
+				if (!is_array($value) || !isset($value[$array_key])) {
+					$value = $default_value;
+					break;
+				}
+				$value = $value[$array_key];
+			}
+		}
+		
+		// This allows for data_type? casts to allow NULL through
+		if ($cast_to !== NULL && substr($cast_to, -1) == '?') {
+			if ($value === NULL || $value === '') {
+				return NULL;
+			}	
+			$cast_to = substr($cast_to, 0, -1);
+		}
+		
+		return self::cast($value, $cast_to);
+	}
+	
 	
 	/**
 	 * Gets a value from the `DELETE`/`PUT` post data, `$_POST` or `$_GET` superglobals (in that order)
@@ -409,48 +489,18 @@ class fRequest
 	 * @param  mixed  $default_value  If the parameter is not set in the `DELETE`/`PUT` post data, `$_POST` or `$_GET`, use this value instead. This value will get cast if a `$cast_to` is specified.
 	 * @return mixed  The value
 	 */
-	static public function get($key, $cast_to=NULL, $default_value=NULL)
+	static public function any($key, $cast_to=NULL, $default_value=NULL)
 	{
-		self::initPutDelete();
-		
-		$value = $default_value;
-		
-		$array_dereference = NULL;
-		if (strpos($key, '[')) {
-			$bracket_pos       = strpos($key, '[');
-			$array_dereference = substr($key, $bracket_pos);
-			$key               = substr($key, 0, $bracket_pos);
+		if (($value = self::post($key, $cast_to, $default_value)) !== $default_value)
+		{
+			return $value;
 		}
-		
-		if (isset(self::$put_delete[$key])) {
-			$value = self::$put_delete[$key];
-		} elseif (isset($_POST[$key])) {
-			$value = $_POST[$key];
-		} elseif (isset($_GET[$key])) {
-			$value = $_GET[$key];
+		elseif (($value = self::get($key, $cast_to, $default_value)) !== $default_value)
+		{
+			return $value;
 		}
-		
-		if ($array_dereference) {
-			preg_match_all('#(?<=\[)[^\[\]]+(?=\])#', $array_dereference, $array_keys, PREG_SET_ORDER);
-			$array_keys = array_map('current', $array_keys);
-			foreach ($array_keys as $array_key) {
-				if (!is_array($value) || !isset($value[$array_key])) {
-					$value = $default_value;
-					break;
-				}
-				$value = $value[$array_key];
-			}
-		}
-		
-		// This allows for data_type? casts to allow NULL through
-		if ($cast_to !== NULL && substr($cast_to, -1) == '?') {
-			if ($value === NULL || $value === '') {
-				return NULL;
-			}	
-			$cast_to = substr($cast_to, 0, -1);
-		}
-		
-		return self::cast($value, $cast_to);
+
+		return self::cast($default_value, $cast_to);
 	}
 	
 	
