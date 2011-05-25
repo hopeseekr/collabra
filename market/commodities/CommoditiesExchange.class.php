@@ -6,7 +6,8 @@
   * Copyright(c) 2011 Monica A. Chase <monica@phpexperts.pro>
   * All rights reserved.
  **/
- 
+
+/** @package CollabraMarket **/
 class CommoditiesExchange
 {
 	private static $instance;

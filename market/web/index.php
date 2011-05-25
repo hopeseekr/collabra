@@ -13,7 +13,7 @@
 session_start();
 
 // 0. Initialize the Market library.
-require '../Market.php';
+require_once realpath(dirname(__FILE__) . '/../Market.php');
 Market::init();
 
 $output = ControllerCommander::dispatch();

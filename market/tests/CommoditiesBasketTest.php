@@ -6,6 +6,7 @@
   * Copyright(c) 2011 Monica A. Chase <monica@phpexperts.pro>
   * All rights reserved.
  **/
+require_once 'bootstrap.inc.php';
 
 require_once 'PHPUnit/Framework/TestCase.php';
 

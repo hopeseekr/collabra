@@ -7,6 +7,7 @@
   * All rights reserved.
  **/
 
+require_once 'bootstrap.inc.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
 class PaymentManagerTest extends PHPUnit_Framework_TestCase
@@ -42,7 +43,8 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
     protected function buildPaymentBasket($commodityName, $quantity)
     {
         $commodity = CommoditiesFactory::build($commodityName);
-        $basket = new CommoditiesBasket($commodity, $quantity);
+        $basket = new CommoditiesBasket;
+		$basket->add($commodity, $quantity);
 
         return $basket;
     }
@@ -111,7 +113,6 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 	public function testWillBuildACommoditiesBasket()
 	{
 		$expectedValue = $this->buildPaymentBasket('Silver', 5);
-
 		$returnedValue = $this->bookie->buildPaymentBasket('Silver', 5);
 
 		$this->assertEquals($expectedValue, $returnedValue);
@@ -123,15 +124,14 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		{
 			$paymentBasket = $this->buildPaymentBasket('Silver', 1);
 			$loanBasket = $this->buildPaymentBasket('Federal Reserve Note', 100);
-			print_r($loanBasket);
 	
 			$frn = $this->bookie->handlePaymentTransaction($paymentBasket, $loanBasket, 1);
 		}
-		catch (CommoditiesException $e)
+		catch (CommodityException $e)
 		{
 			if ($e->getMessage() != "INSUFFICIENT FUNDS: Input is worth less than deliverable.")
 			{
-				$this->assertTrue(false, 'Returned an unexpected exception message.');
+				$this->assertTrue(false, 'Returnded an unexpected exception message.');
 			}
 		}
 	}

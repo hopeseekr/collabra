@@ -7,6 +7,7 @@
   * All rights reserved.
  **/
 
+require_once 'bootstrap.inc.php';
 require_once 'PHPUnit/Extensions/OutputTestCase.php';
 
 class GenericControllerTest extends PHPUnit_Extensions_OutputTestCase

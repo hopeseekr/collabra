@@ -23,7 +23,8 @@ class PaymentManager
 		$commodity = CommoditiesFactory::build($commodityName);
 
 		// 3. Build the basket.
-		$basket = new CommoditiesBasket($commodity, $quantity);
+		$basket = new CommoditiesBasket;
+		$basket->add($commodity, $quantity);
 
 		return $basket;
 	}
@@ -63,7 +64,7 @@ class PaymentManager
 		{
 			$FRNs = $comex->exchange($paymentBasket, $loanBasket);
 		}
-		catch(CommoditiesException $e)
+		catch(CommodityException $e)
 		{
 			// Since we expect the possibilty of the loan not being paid off in full,
 			// we're just going to ignore this exception but re-throw any others.
@@ -77,7 +78,7 @@ class PaymentManager
 		// TODO: This really needs to be stored in a database.
 		$loanStore = $loanBasket->take();
 		$modifiedLoanCommodity = CommoditiesFactory::build($loanStore->commodity->name);
-		$modifiedLoanBasket = new CommoditesBasket($modifiedLoanCommodity, $FRNs->quantity);
+		$modifiedLoanBasket = new CommoditiesBasket($modifiedLoanCommodity, $FRNs->quantity);
 
 		return $modifiedLoanBasket;
 	}

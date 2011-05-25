@@ -7,6 +7,7 @@
   * All rights reserved.
  **/
 
+require_once 'bootstrap.inc.php';
 require_once 'PHPUnit/Extensions/OutputTestCase.php';
 
 class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
@@ -68,7 +69,8 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 	protected function buildPaymentBasket($commodityName, $quantity)
 	{
 		$commodity = CommoditiesFactory::build($commodityName);
-		$basket = new CommoditiesBasket($commodity, $quantity);
+		$basket = new CommoditiesBasket;
+		$basket->add($commodity, $quantity);
 
 		return $basket;
 	}

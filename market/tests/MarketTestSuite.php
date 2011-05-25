@@ -10,18 +10,17 @@
 require_once 'PHPUnit/Framework/TestSuite.php';
 
 // 0. Init the Market library.
-require_once './Market.php';
-Market::init();
+require_once 'bootstrap.inc.php';
 
-require_once 'tests/CommodityStoreTest.php';
-require_once 'tests/CommoditiesFactoryTest.php';
-require_once 'tests/CommoditiesBasketTest.php';
-require_once 'tests/CommoditiesExchangeTest.php';
-require_once 'tests/GenericControllerTest.php';
-require_once 'tests/PaymentControllerTest.php';
-require_once 'tests/LoanControllerTest.php';
-require_once 'tests/PaymentManagerTest.php';
-require_once 'tests/LoanManagerTest.php';
+require_once CMARKET_LIB_PATH . '/tests/CommodityStoreTest.php';
+require_once CMARKET_LIB_PATH . '/tests/CommoditiesFactoryTest.php';
+require_once CMARKET_LIB_PATH . '/tests/CommoditiesBasketTest.php';
+require_once CMARKET_LIB_PATH . '/tests/CommoditiesExchangeTest.php';
+require_once CMARKET_LIB_PATH . '/tests/GenericControllerTest.php';
+require_once CMARKET_LIB_PATH . '/tests/PaymentControllerTest.php';
+require_once CMARKET_LIB_PATH . '/tests/LoanControllerTest.php';
+require_once CMARKET_LIB_PATH . '/tests/PaymentManagerTest.php';
+require_once CMARKET_LIB_PATH . '/tests/LoanManagerTest.php';
 
 /**
  * Static test suite.

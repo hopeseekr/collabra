@@ -7,6 +7,7 @@
   * All rights reserved.
  **/
 
+/** @package CollabraMarket **/
 class CommoditiesFactory
 {
 	public static function build($commodityName)

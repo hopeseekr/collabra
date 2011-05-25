@@ -15,6 +15,7 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
+require_once 'bootstrap.inc.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
 class CommodityStoreTest extends PHPUnit_Framework_TestCase
@@ -52,7 +53,7 @@ class CommodityStoreTest extends PHPUnit_Framework_TestCase
 
 	public function testCanStoreACommodity()
 	{
-		$this->assertType('Commodity', $this->commodityStore->commodity);
+		$this->assertInstanceOf('Commodity', $this->commodityStore->commodity);
 	}
 
 	public function testCanStoreMultipleQuantities()

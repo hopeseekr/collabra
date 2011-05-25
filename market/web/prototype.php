@@ -13,8 +13,7 @@ require '../storage/StorageSpecs.class.php';
 require '../commodities/CommoditiesFactory.class.php';
 */
 
-require '../Market.php';
-
+require_once realpath(dirname(__FILE__) . '/../Market.php');
 Market::init();
 
 $silver = CommoditiesFactory::build("Silver");
@@ -33,7 +32,7 @@ printf("Value of Theo's basket: $%.2f\n", $theosBasket->getTotalValuation());
 printf("Value of Monica's basket: $%.2f\n", $monicasBasket->getTotalValuation());
 
 // Set up the Commodity Exchange.
-$comex = CommodityExchange::getInstance();
+$comex = CommoditiesExchange::getInstance();
 
 // Get value differential between silver and FRNs.
 $value = $comex->getValueDifferential($theosBasket, $monicasBasket);

@@ -7,6 +7,7 @@
   * All rights reserved.
  **/
 
+require_once 'bootstrap.inc.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
 class CommoditiesFactoryTest extends PHPUnit_Framework_TestCase
