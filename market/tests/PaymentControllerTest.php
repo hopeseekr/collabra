@@ -82,12 +82,6 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 		$this->controller->execute("UNKNOWN ACTION");
 	}
 
-	public function testWillShowMonicasBoobsToTheo()
-	{
-		// This goes to false if it doesn't actually happen ;p
-		$this->assertTrue(true);
-	}
-
 	public function testWillCreateAPaymentBasket()
 	{
 		// Build the input parameters.
