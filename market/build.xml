@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="CollabraMarket" default="unit_tests">
+	<property name="isNewBuild" value=""/>
 	<target name="clean">
 	</target>
 	<target name="unit_tests">
@@ -19,4 +20,22 @@
 			/>
 		<exec dir="tests" command="phpunit --coverage-html reports/html/coverage --testdox-html reports/html/docs.html MarketTestSuite.php" />
 	</target>
+	<target name="run_ci_tasks">
+		<exec
+		    dir="."
+		    command="bzr log --line --limit 20 | md5sum | awk '{print $1}' | diff -u build.md5 -"
+			outputProperty="isNewBuild"/>
+		<if>
+			<equals arg1="${isNewBuild}" arg2=""/>
+			<then>
+				<echo msg="Build is up to date"/>
+			</then>
+			<else>
+				<echo msg="Build is out of date"/>
+				<phingcall target="unit_tests"/>
+				<exec dir="." command="bzr log --line --limit 20 | md5sum | awk '{print $1}' > build.md5" />
+			</else>
+		</if>
+	</target>
 </project>
+
