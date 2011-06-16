@@ -10,9 +10,8 @@
 		</div>
 		<div class="bodyContent">
 			<p id="abstract">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt 
-				ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-				laboris nisi ut aliquip ex ea commodo consequat.
+				Collabra Market's goal is to facilitate the exchange of commodities by
+				registering loans in one commodity and paying them with another.
 			</p>
 			<div id="payment_basket">
 				<h2>Create a payment basket</h2>
