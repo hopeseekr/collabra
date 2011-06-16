@@ -23,7 +23,15 @@ class ControllerCommander
 	{
 		$action = fRequest::get('action', 'string');
 
-		if (empty($action) || is_string($action))
+        // I want to make the default action to show the home page...
+		if (empty($action))
+        {
+            // By having an actionslist class, I can avoid the dreaded
+            // "Magic Constant". E.g. instead of having to worry about whether it's
+            // "home", "index", "showHome",etc, i just rely on ActionList.
+            $action = ActionsList::SHOW_HOME;
+        }
+        elseif (is_string($action))
 		{
 			throw new ControllerException("Invalid action", ControllerException::INVALID_ACTION);
 		}
