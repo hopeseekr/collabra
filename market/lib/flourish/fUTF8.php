@@ -26,7 +26,6 @@
  * @changes    1.0.0b2   Fixed a bug in ::explode() with newlines and zero-length delimiters [wb, 2009-02-05]
  * @changes    1.0.0b    The initial implementation [wb, 2008-06-01]
  */
-// @codeCoverageIgnoreStart
 class fUTF8
 {
 	// The following constants allow for nice looking callbacks to static methods
@@ -1598,7 +1597,6 @@ class fUTF8
 	 */
 	private function __construct() { }
 }
-// @codeCoverageIgnoreStop
 
 
 /**
