@@ -53,7 +53,7 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 
 	public function testWillShowHomePageByDefault()
 	{
-		$homePageHTML = $this->grabPageHTML('home');
+		$homePageHTML = grabPageHTML('home');
 		$this->expectOutputString($homePageHTML);
 		$this->controller->execute("UNKNOWN ACTION");
 	}
@@ -66,8 +66,8 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 		               'payment_quantity'  => 1);
 	
 		// Build the expected value.
-		$homePageHTML = $this->grabPageHTML('home');
-		$expectedValue = $this->buildPaymentBasket('Silver', 1);
+		$homePageHTML = grabPageHTML('home');
+		$expectedValue = buildPaymentBasket('Silver', 1);
 		$this->expectOutputString($homePageHTML);
 	
 		$this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
