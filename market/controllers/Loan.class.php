@@ -13,6 +13,7 @@ class LoanController implements CommandI
 	{
 		if ($action == ActionsList::REGISTER_LOAN)
 		{
+            error_log('asdf');
 			return $this->registerLoan();
 		}
 	}
@@ -32,7 +33,7 @@ class LoanController implements CommandI
 
 	protected function grabUserInput()
 	{
-		if(!isset($_POST))
+		if(empty($_POST))
 		{
 			throw new ControllerException("No user input", ControllerException::INVALID_USER_INPUT);
 		}

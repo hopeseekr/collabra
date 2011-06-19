@@ -12,99 +12,158 @@ require_once 'PHPUnit/Extensions/OutputTestCase.php';
 
 class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 {
-	/** @var CommodityStore **/
-	private $controller;
+    /** @var PaymentController **/
+    private $controller;
 
-	private static $session_id;
+    private static $session_id;
 
-	/**
-	 * Prepares the environment before running a test.
-	 */
-	protected function setUp()
-	{
-		$this->controller = new PaymentController;
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        $this->controller = new PaymentController;
+        if (!headers_sent())
+        {
+            if (!self::$session_id)
+            {
+                session_start();
+                self::$session_id = session_id();
+            }
+        }
+        parent::setUp();
+    }
 
-		parent::setUp();
-	}
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        //session_destroy();
+        parent::tearDown();
+    }
+    
+    /**
+     * Constructs the test case.
+     */
+    public function __construct()
+    {
+    }
 
-	/**
-	 * Cleans up the environment after running a test.
-	 */
-	protected function tearDown()
-	{
-		parent::tearDown();
-	}
-	
-	/**
-	 * Constructs the test case.
-	 */
-	public function __construct()
-	{
-		if (!headers_sent())
-		{
-			if (!self::$session_id)
-			{
-				session_start();
-				self::$session_id = session_id();
-			}
-		}
+    public function testWillNotCreateAPaymentBasketWithoutUserInput()
+    {
+        try
+        {
+            $this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
+            $this->fail('Worked without any user input');
+        }
+        catch (ControllerException $e)
+        {
+            $this->assertEquals(ControllerException::INVALID_USER_INPUT, $e->getCode());
+        }
+    }
 
-	}
+    public function testWillCreateAPaymentBasket()
+    {
+        // Build the input parameters.
+        $_SERVER['REQUEST_METHOD'] = 'post';
+        $_POST = array('payment_commodity' => 'Silver',
+                       'payment_quantity'  => 1);
+    
+        // Build the expected value.
+        $homePageHTML = grabPageHTML('home');
+        $expectedValue = buildPaymentBasket('Silver', 1);
+        $this->expectOutputString($homePageHTML);
+    
+        $this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
 
-	public function testWillShowHomePageByDefault()
-	{
-		$homePageHTML = grabPageHTML('home');
-		$this->expectOutputString($homePageHTML);
-		$this->controller->execute("UNKNOWN ACTION");
-	}
+        // Make sure the session object has been created and is an array.
+        $this->assertTrue(isset($_SESSION['payments']) && is_array($_SESSION['payments']));
 
-	public function testWillCreateAPaymentBasket()
-	{
-		// Build the input parameters.
-		$_SERVER['REQUEST_METHOD'] = 'post';
-		$_POST = array('payment_commodity' => 'Silver',
-		               'payment_quantity'  => 1);
-	
-		// Build the expected value.
-		$homePageHTML = grabPageHTML('home');
-		$expectedValue = buildPaymentBasket('Silver', 1);
-		$this->expectOutputString($homePageHTML);
-	
-		$this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
+        // Make sure the payments array is not empty.
+        $this->assertTrue(!empty($_SESSION['payments']));
 
-		// Make sure the session object has been created and is an array.
-		$this->assertTrue(isset($_SESSION['payments']) && is_array($_SESSION['payments']));
+        $this->assertEquals($expectedValue, $_SESSION['payments'][0]);
+    }
 
-		// Make sure the payments array is not empty.
-		$this->assertTrue(!empty($_SESSION['payments']));
+    public function testMustHaveUserInputToMakeAPayment()
+    {
+        try
+        {
+            $this->controller->execute(ActionsList::MAKE_PAYMENT);
+            $this->fail('Worked without any user input');
+        }
+        catch(ControllerException $e)
+        {
+            $this->assertEquals(ControllerException::INVALID_USER_INPUT, $e->getCode());
+        }
+    }
 
-		$this->assertEquals($expectedValue, $_SESSION['payments'][0]);
-	}
+    public function testMustHaveARegisteredPaymentBasketToMakeAPayment()
+    {
+        // Build the input parameters.
+        $_SERVER['REQUEST_METHOD'] = 'post';
+        $_POST = array('payment_commodity' => 'Silver',
+                       'payment_quantity'  => 1);
 
-	public function testWillMakeAPayment()
-	{
-		// We're currently testing the PaymentController, but MakeAPayment
-		// requires PaymentManager to work. So this means that we either have
-		// to unit test PaymentManager first or make the code less brittle.
-		// Which do you prefer? unit test PaymentManager.
-	}
+        try
+        {
+            $this->controller->execute(ActionsList::MAKE_PAYMENT);
+            $this->fail('Worked without a registered payment basket.');
+        }
+        catch(LogicException $e)
+        {
+            $this->assertEquals("You must have a registered payment to make a payment.", $e->getMessage());
+        }
+    }
+
+    public function testMustHaveARegisteredLoanToMakeAPayment()
+    {
+        // Register the Payment Basket
+        $_SERVER['REQUEST_METHOD'] = 'post';
+        $_POST = array('payment_commodity' => 'Silver',
+                       'payment_quantity'  => 1);
+
+        $this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
+
+        try
+        {
+            $this->controller->execute(ActionsList::MAKE_PAYMENT);
+            $this->fail('Worked without a registered loan.');
+        }
+        catch(LogicException $e)
+        {
+            $this->assertEquals("You must have a registered loan to make a payment.", $e->getMessage());
+        }
+    }
+   
+    public function testWillMakeAPayment()
+    {
+        $this->markTestIncomplete();
+        // Register the Payment Basket
+        $_SERVER['REQUEST_METHOD'] = 'post';
+        $_POST = array('payment_commodity' => 'Silver',
+                       'payment_quantity'  => 1);
+
+        $this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
+//        error_log(var_export($_SESSION, true));
+
+        $this->controller->execute(ActionsList::REGISTER_LOAN);
+//        error_log(var_export($_SESSION, true));
+/*
+        // Make sure the session object has been created and is an array.
+        $this->assertTrue(isset($_SESSION['payments']) && is_array($_SESSION['payments']));
+
+        // Make sure the payments array is not empty.
+        $this->assertTrue(!empty($_SESSION['payments']));
+
+        $this->assertEquals($expectedValue, $_SESSION['payments'][0]);
+*/
+/*    
+        // Build the expected value.
+        $homePageHTML = grabPageHTML('home');
+        $expectedValue = buildPaymentBasket('Silver', 1);
+        $this->expectOutputString($homePageHTML);
+*/
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

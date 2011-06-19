@@ -29,11 +29,11 @@ class PaymentController implements CommandI
     protected function createPaymentBasket()
 	{
 		// 1. Grab the form data.
-		// FIXME: This is a great candidate for the Strategy Pattern.
-		if(!isset($_POST))
-		{
-			throw new ControllerException("No user input", ControllerException::INVALID_USER_INPUT);
-		}
+        // FIXME: This is a great candidate for the Strategy Pattern.
+        if(empty($_POST))
+        {
+            throw new ControllerException("No user input", ControllerException::INVALID_USER_INPUT);
+        }
 
 		$commodityName = fRequest::post('payment_commodity', 'string');
 		$quantity = fRequest::post('payment_quantity', 'float');
@@ -79,21 +79,21 @@ class PaymentController implements CommandI
 	// TODO: Great candidate for Strategy Pattern.
 	protected function ensureSaneInputs_MP($paymentID, $loanID, $amount)
 	{
-        if (!isset($_POST))
+        if (empty($_POST))
         {
             throw new ControllerException("No user input", ControllerException::INVALID_USER_INPUT);
         }
 
-        if (!is_int($targetLoanID)) { throw new InvalidArgumentException("Target Loan ID must be an integer."); }
+        if (!is_int($loanID)) { throw new InvalidArgumentException("Target Loan ID must be an integer."); }
         // Now use this template for the other two, honey.
         if (!is_int($paymentID)) { throw new InvalidArgumentException("Payment ID must be an integer."); }
         if (!is_numeric($amount)) { throw new InvalidArgumentException("Amount must be a float."); }
 
-        if (!isset($_SESSION['payments'])) { throw new RuntimeException("You must have a registered payment to make a payment."); }
-        if (!isset($_SESSION['loans'])) { throw new RuntimeException("You must have a registered loan to make a payment."); }
+        if (!isset($_SESSION['payments'])) { throw new LogicException("You must have a registered payment to make a payment."); }
+        if (!isset($_SESSION['loans'])) { throw new LogicException("You must have a registered loan to make a payment."); }
 
         if (!isset($_SESSION['payments'][$paymentID])) { throw new InvalidArgumentException("Invalid Payment ID."); }
-        if (!isset($_SESSION['loans'][$targetLoanID])) { throw new InvalidArgumentException("Invalid Target Loan ID."); }
+        if (!isset($_SESSION['loans'][$loanID])) { throw new InvalidArgumentException("Invalid Target Loan ID."); }
 	}
 
 	protected function recordTransaction($paymentID, $loanID, $modifiedLoanBasket)

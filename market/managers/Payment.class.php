@@ -32,8 +32,8 @@ class PaymentManager
 	// FIXME: This is a great candidate for the Strategy Pattern.
 	protected function ensureSaneInputs_BPB($commodityName, $quantity)
 	{
-		if (!is_string($commodityName)) { throw new InvalidArgumentException("Commodity Name must be a string"); }
-		if (!is_numeric($quantity)) { throw new InvalidArgumentException("Quantity must be a float"); }
+		if (empty($commodityName) || !is_string($commodityName)) { throw new InvalidArgumentException("Commodity Name must be a string"); }
+		if (empty($quantity) || !is_numeric($quantity)) { throw new InvalidArgumentException("Quantity must be a float"); }
 
 		if ($quantity <= 0) { throw new OutOfBoundsException("The payment commodity quantity must be more than 0."); }
 	}
