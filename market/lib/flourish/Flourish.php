@@ -1,5 +1,5 @@
 <?php
-
+// @codeCoverageIgnoreStart
 class Flourish
 {
 	private function __construct() { }
@@ -15,4 +15,4 @@ class Flourish
 		spl_autoload_register(array(__CLASS__, 'autoload'));
 	}
 }
-
+// @codeCoverageIgnoreStop

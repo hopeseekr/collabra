@@ -36,6 +36,7 @@
  * @changes    1.0.0b2   Added ::generateCSRFToken() from fCRUD::generateRequestToken() and ::validateCSRFToken() from fCRUD::validateRequestToken() [wb, 2009-05-08]
  * @changes    1.0.0b    The initial implementation [wb, 2007-06-14]
  */
+// @codeCoverageIgnoreStart
 class fRequest
 {
 	// The following constants allow for nice looking callbacks to static methods
@@ -975,7 +976,7 @@ class fRequest
 	 */
 	private function __construct() { }
 }
-
+// @codeCoverageIgnoreStop
 
 
 /**
