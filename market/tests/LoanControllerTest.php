@@ -12,13 +12,14 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 class LoanControllerTest extends PHPUnit_Framework_TestCase
 {
-	/** @var CommodityStore **/
-	private $commodityStore;
+	/** @var LoanController **/
+	private $controller;
 	/**
 	 * Prepares the environment before running a test.
 	 */
 	protected function setUp()
 	{
+        $this->controller = new LoanController;
 		parent::setUp();
 	}
 
@@ -36,9 +37,57 @@ class LoanControllerTest extends PHPUnit_Framework_TestCase
 	public function __construct()
 	{
 	}
+
+    public function testWillNotRegisterALoanWithoutUserInput()
+    {
+        try
+        {
+            $this->controller->execute(ActionsList::REGISTER_LOAN);
+            $this->fail('Worked without any user input');
+        }
+        catch (ControllerException $e)
+        {
+            $this->assertEquals(ControllerException::INVALID_USER_INPUT, $e->getCode());
+        }
+    }
+    
+    public function testRequiresSaneInputs()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'post';
+        $goodData = array('loan_commodity' => 'Federal Reserve Note',
+                       'loan_quantity'  => 8500.00,
+                       'loan_term' => 15,
+                       'loan_interest_rate' => 6.0);
+        
+        $testParams = array('loan_quantity', 'loan_term', 'loan_interest_rate');
+        foreach ($testParams as $param)
+        {
+            $_POST = $goodData;
+            $_POST[$param] = -5;
+
+            try
+            {
+                $this->controller->execute(ActionsList::REGISTER_LOAN);
+                $this->fail("Worked with invalid $param");
+            }
+            catch (OutOfBoundsException $e)
+            {
+            }
+        }
+    }
+    
+    public function testWillRegisterALoan()
+    {
+        $_SERVER['REQUEST_METHOD'] = 'post';
+        $_POST = array('loan_commodity' => 'Federal Reserve Note',
+                       'loan_quantity'  => 8500.00,
+                       'loan_term' => 15,
+                       'loan_interest_rate' => 6.0);
+
+        $this->controller->execute(ActionsList::REGISTER_LOAN);
+        file_put_contents('output.txt', serialize($_SESSION['loans']));
+    }
 }
-
-
 
 
 

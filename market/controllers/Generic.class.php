@@ -11,7 +11,7 @@ class GenericController implements CommandI
 {
 	public function execute($action)
 	{
-		if ($action == ActionsList::SHOW_HOME)
+		if ($action == '' || $action == ActionsList::SHOW_HOME)
 		{
 			require CMARKET_LIB_PATH . '/views/home.tpl.php';
 		}
@@ -20,10 +20,7 @@ class GenericController implements CommandI
 			header('HTTP/1.0 404 FILE NOT FOUND');
 			require CMARKET_LIB_PATH . '/views/404.tpl.php';
 		}
-		else
-		{
-			// Show 404 by default.
-			$this->execute(ActionsList::SHOW_404);
-		}
+
+        return true;
 	}
 }

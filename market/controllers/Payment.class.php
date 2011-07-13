@@ -9,6 +9,14 @@
 
 class PaymentController implements CommandI
 {
+    /** @var PaymentManager **/
+    private $bookie;
+
+    public function __construct(PaymentManager $bookie = null)
+    {
+        $this->bookie = ($bookie !== null) ? $bookie : new PaymentManager;
+    }
+
 	public function execute($action)
 	{
 		// These actions dont actually return any HTML. They should,
@@ -21,9 +29,6 @@ class PaymentController implements CommandI
 		{
 			$this->makePayment();
 		}
-
-		$generic = new GenericController;
-		$generic->execute(ActionsList::SHOW_HOME);
 	}
 
     protected function createPaymentBasket()
@@ -39,11 +44,12 @@ class PaymentController implements CommandI
 		$quantity = fRequest::post('payment_quantity', 'float');
 
 		// 2. Build the payment basket.
-		$bookie = new PaymentManager;
-		$paymentBasket = $bookie->buildPaymentBasket($commodityName, $quantity);
+		$paymentBasket = $this->bookie->buildPaymentBasket($commodityName, $quantity);
 
 		// 3. Register the payment basket in the session.
 		$_SESSION['payments'][] = $paymentBasket;
+
+        ControllerCommander::dispatch(ActionsList::SHOW_HOME);
 	}
 
     protected function makePayment()
@@ -53,27 +59,29 @@ class PaymentController implements CommandI
 		$paymentID     = fRequest::post('payment_commodity', 'integer');
 		$loanID        = fRequest::post('target_loan',       'integer');
 		$amount        = fRequest::post('loan_quantity',     'float');
+        error_log("Ammount: " . $amount);
 
 		// Sanity checks.
 		$this->ensureSaneInputs_MP($paymentID, $loanID, $amount);
 
 
 		// TODO: Remove debug info.
-		echo 'BEforE: <pre>', print_r($_SESSION, true), '</pre>';
+		//echo 'BEforE: <pre>', print_r($_SESSION, true), '</pre>';
 
 		// 2. Retrieve our baskets.
 		$paymentBasket = $_SESSION['payments'][$paymentID];
-		$loanBasket = clone $_SESSION['loans'][$targetLoanID];
+		$loanBasket = $_SESSION['loans'][$loanID];
 
 		// 2. Pay the loan.
-		$bookie = new PaymentManager;
-		$modifiedLoanBasket = $bookie->handlePaymentTransaction($paymentBasket, $loanBasket, $amount);
-	
+		$modifiedLoanBasket = $this->bookie->handlePaymentTransaction($paymentBasket, $loanBasket, $amount);
+
 		// 3. Record the transaction and update the ledgers.
 		$this->recordTransaction($paymentID, $loanID, $modifiedLoanBasket);
 
 		// TODO: Remove debug info.
-		echo 'AFTER: <pre>', print_r($_SESSION, true), '</pre>';
+		//echo 'AFTER: <pre>', print_r($_SESSION, true), '</pre>';
+
+        ControllerCommander::dispatch(ActionsList::SHOW_HOME);
 	}
 
 	// TODO: Great candidate for Strategy Pattern.

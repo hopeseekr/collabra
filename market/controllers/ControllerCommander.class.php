@@ -31,25 +31,27 @@ class ControllerCommander
             // "home", "index", "showHome",etc, i just rely on ActionList.
             $action = ActionsList::SHOW_HOME;
         }
-        elseif (is_string($action))
+        elseif (!is_string($action))
 		{
 			throw new ControllerException("Invalid action", ControllerException::INVALID_ACTION);
 		}
+
+        return $action;
 	}
 
 	/** Dispatches actions out to the controllers and returns the output, if any.
 	  * @return string Output from the Views.
 	 **/
-    public static function dispatch()
+    public static function dispatch($action = null)
     {
-		$action = self::fetchAction();
+		$action = ($action !== null) ? $action : self::fetchAction();
         
-        $controllers = array('LoanController', 'PaymentController');
+        $controllers = array('LoanController', 'PaymentController', 'GenericController');
 		$output = '';
         foreach ($controllers as $c)
         {
             $controller = new $c;
-            if (($result = $controller->execute($action)) !== false)
+            if (($result = $controller->execute($action)) != null)
             {
                 $output .= $result;
             }
@@ -57,7 +59,7 @@ class ControllerCommander
 
 		if (empty($output))
 		{
-        	throw new ControllerException('No implementation found for ' . $action, ControllerException::ERROR_INVALID_ACTION);
+        	throw new ControllerException('No implementation found for ' . $action, ControllerException::INVALID_ACTION);
 		}
 
 		return $output;

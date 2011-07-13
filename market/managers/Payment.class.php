@@ -78,7 +78,8 @@ class PaymentManager
 		// TODO: This really needs to be stored in a database.
 		$loanStore = $loanBasket->take();
 		$modifiedLoanCommodity = CommoditiesFactory::build($loanStore->commodity->name);
-		$modifiedLoanBasket = new CommoditiesBasket($modifiedLoanCommodity, $FRNs->quantity);
+		$modifiedLoanBasket = new CommoditiesBasket;
+        $modifiedLoanBasket->add($modifiedLoanCommodity, $FRNs->quantity);
 
 		return $modifiedLoanBasket;
 	}

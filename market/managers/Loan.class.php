@@ -15,11 +15,11 @@ class LoanManager
 	public function buildLoan($commodityName, $quantity, $loanTerm, $interestRate)
 	{
 		// 1. Sanity checks.
-        error_log('m');
 		$this->ensureSaneInputs($commodityName, $quantity, $loanTerm, $interestRate);
 
 		// 2. Build the loan.
-		$commodityStore = CommoditiesFactory::build($commodityName, $quantity);
+		$commodity = CommoditiesFactory::build($commodityName);
+        $commodityStore = new CommodityStore($commodity, $quantity);
 
 		$loan = array('commodityStore' => $commodityStore,
 		              'loanTerm'       => $loanTerm,
@@ -30,7 +30,6 @@ class LoanManager
 
 	protected function ensureSaneInputs($commodityName, $quantity, $loanTerm, $interestRate)
 	{
-        error_log("Commodity name: " . $commodityName);
 		if (empty($commodityName) || !is_string($commodityName)) { throw new InvalidArgumentException("Commodity name must be a string"); }
 		if (empty($quantity) || !is_numeric($quantity)) { throw new InvalidArgumentException("Quantity must be a float"); }
 		if (empty($loanTerm) || !is_int($loanTerm)) { throw new InvalidArgumentException("Loan term must be an integer"); }
@@ -40,5 +39,4 @@ class LoanManager
 		if ($loanTerm <= 0) { throw new OutOfBoundsException("The loan tern must be more than 0."); }
 		if ($interestRate <= 0) { throw new OutOfBoundsException("The interest rate must be more than 0."); }
 	}
-
 }

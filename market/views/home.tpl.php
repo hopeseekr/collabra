@@ -15,7 +15,7 @@
 			</p>
 			<div id="payment_basket">
 				<h2>Create a payment basket</h2>
-				<form method="post" action="create_payment_basket.php">
+				<form method="post" action="?action=<?php echo ActionsList::CREATE_PAYMENT_BASKET; ?>">
 					<fieldset>
 						<div class="required">
 							<label for="payment_commodity">Commodity:</label>
@@ -37,7 +37,7 @@
 			</div>
 			<div id="register_loan">
 				<h2>Register a new loan</h2>
-				<form method="post" action="register_loan.php">
+				<form method="post" action="?action=<?php echo ActionsList::REGISTER_LOAN; ?>">
 					<fieldset>
 						<div class="required">
 							<label for="loan_commodity">Denominated Commodity:</label>
@@ -84,9 +84,10 @@ if (isset($_SESSION['loans']) && isset($_SESSION['payments']))
 <?php
 	foreach ($_SESSION['loans'] as $id => $loanStore)
 	{
+        error_log(print_r($loanStore, true));
 		$loanLine = sprintf('%s (%.2f)', 
-		                    $loanStore->commodity->name,
-		                    $loanStore->quantity);
+		                    $loanStore['commodityStore']->commodity->name,
+		                    $loanStore['commodityStore']->commodityStore->quantity);
 ?>
 								<option value="<?php echo $id; ?>"><?php echo $loanLine; ?></option>
 <?php

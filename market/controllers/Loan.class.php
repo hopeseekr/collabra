@@ -13,7 +13,6 @@ class LoanController implements CommandI
 	{
 		if ($action == ActionsList::REGISTER_LOAN)
 		{
-            error_log('asdf');
 			return $this->registerLoan();
 		}
 	}

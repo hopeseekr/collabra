@@ -18,10 +18,15 @@ function grabPageHTML($page)
     return $html;
 }
 
+function buildBasket($commodityName, $quantity)
+{
+    return buildPaymentBasket($commodityName, $quantity);
+}
+
 function buildPaymentBasket($commodityName, $quantity)
 {
     $commodity = CommoditiesFactory::build($commodityName);
-    $basket = new CommoditiesBasket;
+    $basket = new CommoditiesBasket();
     $basket->add($commodity, $quantity);
 
     return $basket;
