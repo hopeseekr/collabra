@@ -1,4 +1,11 @@
 <?php
+/** The Collabra Identities Project
+  *   Part of the Collabra Commercial Collaboration Platform
+  *
+  * Copyright(c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
+  * All rights reserved.
+ **/
+
 
 // Load require files...
 require '../managers/Security.class.php';
@@ -6,10 +13,6 @@ require '../managers/User.class.php';
 require '../managers/Authentication.class.php';
 
 
-
-// Revision 1 (31 March 2011) | Monica Chase (monica@phpexperts.pro)
-//
-// Type "i" to get into insert mode...
 
 define('EXAMPLE_URL', "http://www.phpexperts.pro/");
 
@@ -47,8 +50,5 @@ catch (Exception $e)
 }
 
 
-
-
-// -- Monica's code
 $bouncer = new SecurityManager();
 $usher = new AuthenticationManager($bouncer);

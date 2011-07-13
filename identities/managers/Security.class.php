@@ -1,7 +1,12 @@
 <?php
 
-// CREATED BY: Monica Chase (monica@phpexperts.pro) | 30 March 2011
-// Revision 1 (31 March 2011) | Monica Chase (monica@phpexperts.pro)
+/** The Collabra Identities Project
+  *   Part of the Collabra Commercial Collaboration Platform
+  *
+  * Copyright(c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
+  * All rights reserved.
+ **/
+
 //
 // @purpose to determine whether any given user has read access to any given URL
 //

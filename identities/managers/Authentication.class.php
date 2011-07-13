@@ -1,8 +1,15 @@
 <?php
 
-// Monica Chase (monica@phpexperts.pro) | 30 March 2011
+/** The Collabra Identities Project
+  *   Part of the Collabra Commercial Collaboration Platform
+  *
+  * Copyright(c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
+  * All rights reserved.
+ **/
+
 //
-// AuthenticationManager (e.g. "The Usher") is responsible for validating people are who they say they are, or referring them to The Bouncer.
+// @purpose AuthenticationManager (e.g. "The Usher") is responsible for validating 
+// people are who they say they are, or referring them to The Bouncer.
 
 class AuthenticationManager
 	{

@@ -1,7 +1,14 @@
 <?php
 
-// Monica Chase (monica@phpexperts.pro) | 30 March 2011
-// UserManager (e.g. "Personal Assistant") is responsible for fulfilling
+/** The Collabra Identities Project
+  *   Part of the Collabra Commercial Collaboration Platform
+  *
+  * Copyright(c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
+  * All rights reserved.
+ **/
+
+//
+// @purpose UserManager (e.g. "Personal Assistant") is responsible for fulfilling
 // all of the personal needs of the user, from logging in, changing settings,
 // etc.
 
