@@ -47,8 +47,8 @@
 			</then>
 			<else>
 				<echo msg="Build is out of date"/>
-				<phingcall target="unit_tests"/>
 				<phingcall target="phpcs"/>
+				<phingcall target="unit_tests"/>
 				<exec dir="." command="bzr log --line --limit 20 | md5sum | awk '{print $1}' > build.md5" />
 			</else>
 		</if>
