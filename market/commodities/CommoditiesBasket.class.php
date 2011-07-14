@@ -14,8 +14,27 @@ class CommoditiesBasket
 {
 	// TODO: Determine a more descriptive name for array($commodity, $quantity)
 	/** @var Commodity[] An array of Commodities **/
-	private $commoditiesQueue;
+	protected $commoditiesQueue;
 
+	// The commodity the basket will be valuated at.
+	/** @var Commodity **/
+	protected $measureCommodity;
+
+	public function __construct($measureCommodity = null)
+	{
+		if (!$measureCommodity)
+		{
+			$measureCommodity = CommoditiesFactory::build('FRN');
+		}
+
+		$this->measureCommodity = $measureCommodity;
+	}
+
+	/**
+	* @return Commodity The commodity the basket is valuated at.
+	*/
+	public function getMeasureName() { return $this->measureCommodity->name; }
+	
 	/** Adds a commodity to the basket.
 	  * @param Commodity
 	  * @param [int] Quantity of the commodity
@@ -33,13 +52,13 @@ class CommoditiesBasket
 		// Use existing CommodityStore or create a new one with 0
 		// quantity. (If quantity isn't 0, then you'll have 1 extra later.
 		$store = isset($this->commoditiesQueue[$commodity->name])
-			     ? $this->commoditiesQueue[$commodity->name]
-				 : new CommodityStore($commodity, 0);
+		         ? $this->commoditiesQueue[$commodity->name]
+		         : new CommodityStore($commodity, 0);
 
 		$store->quantity += $quantity;
 		$this->commoditiesQueue[$commodity->name] = $store;
 	}
-	
+
 	/** @return CommodityStore **/
 	public function take()
 	{
@@ -99,26 +118,13 @@ class CommoditiesBasket
 		}
 
 		foreach ($this->commoditiesQueue as 
-				/** @var CommodityStore **/ $commodityStore)
+		        /** @var CommodityStore **/ $commodityStore)
 		{
+			// Valuation in FRNs.
 			$valuation += (float)$commodityStore->calculateWorth();
 		}
 
 		return $valuation;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
