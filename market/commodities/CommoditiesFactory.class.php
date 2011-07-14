@@ -10,9 +10,10 @@
 /** @package CollabraMarket **/
 class CommoditiesFactory
 {
-	public static function build($commodityName)
+	/** @return Commodity **/
+	public static function build($name)
 	{
-		if ($commodityName == "Silver")
+		if ($name == "Silver" || $name == "XAG")
 		{
 			$silver = new Commodity;
 			$silver->name = "Silver";
@@ -32,7 +33,7 @@ class CommoditiesFactory
 
 			return $silver;
 		}
-		else if ($commodityName == "Federal Reserve Note")
+		else if (in_array($name, array("Federal Reserve Note", "FRN", "USD")))
 		{
 			$frn = new Commodity;
 			$frn->name = "Federal Reserve Note";
@@ -54,7 +55,7 @@ class CommoditiesFactory
 		}
 		else
 		{
-			throw new CommodityException("No build process for a commodity called " . htmlspecialchars($commodityName));
+			throw new CommodityException("No build process for a commodity called " . $name);
 		}
 	}
 }
