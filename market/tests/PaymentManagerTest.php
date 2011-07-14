@@ -117,22 +117,4 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals($expectedValue, $returnedValue);
 	}
-
-	public function testWillThrowInsufficientFundsOnUnequalBarter()
-	{
-		try
-		{
-			$paymentBasket = $this->buildPaymentBasket('Silver', 1);
-			$loanBasket = $this->buildPaymentBasket('Federal Reserve Note', 100);
-	
-			$frn = $this->bookie->handlePaymentTransaction($paymentBasket, $loanBasket, 1);
-		}
-		catch (CommodityException $e)
-		{
-			if ($e->getMessage() != "INSUFFICIENT FUNDS: Input is worth less than deliverable.")
-			{
-				$this->assertTrue(false, 'Returnded an unexpected exception message.');
-			}
-		}
-	}
 }

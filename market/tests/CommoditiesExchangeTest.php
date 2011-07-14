@@ -12,7 +12,8 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 {
-	/** @var CommodityStore **/
+	// TODO: Rename the "exchange" actor to "broker".
+	/** @var CommoditiesExchange **/
 	private $exchange;
 
 	/**
@@ -59,13 +60,34 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expectedValue, $returnedValue);
 	}
 
+	public function testWillThrowInsufficientFundsOnANegativeBalanceBarterByDefault()
+	{
+		try
+		{
+			$silverBasket = $this->createBasket('Silver', 1);
+			$frnBasket = $this->createBasket('Federal Reserve Note', 1);
+	
+			$this->exchange->exchange($frnBasket, $silverBasket);
+			$this->fail('Did not throw an exception on an unfair barter.');
+		}
+		catch (CommodityException $e)
+		{
+			if ($e->getMessage() != "INSUFFICIENT FUNDS: Input is worth less than deliverable.")
+			{
+				$this->assertTrue(false, 'Returnded an unexpected exception message.');
+			}
+		}
+	}
+
 	public function testCanExchangeTwoCommoditiesReturningFrnAsDifference()
 	{
 		$silverBasket = $this->createBasket('Silver', 1);
 		$frnBasket = $this->createBasket('Federal Reserve Note', 1);
 
+		$valueDifferential = $this->exchange->getValueDifferential($silverBasket, $frnBasket);
+		//echo "Value Differential: $valueDifferential\n";
 		$frn = CommoditiesFactory::build('Federal Reserve Note');
-		$frnStore = new CommodityStore($frn, 44);
+		$frnStore = new CommodityStore($frn, $valueDifferential);
 
 		$expectedValue = $frnStore;
 
@@ -73,24 +95,20 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expectedValue, $returnedValue);
 
 	}
+
+	public function testCanExchangeTwoCommoditiesOnCredit()
+	{
+		$silverBasket = $this->createBasket('Silver', 1);
+		$frnBasket = $this->createBasket('Federal Reserve Note', 1);
+
+		$valueDifferential = $this->exchange->getValueDifferential($frnBasket, $silverBasket);
+		// TODO: Rename CommoditiesFactory to CommodityFactory.
+		$frn = CommoditiesFactory::build('Federal Reserve Note');
+		$frnStore = new CommodityStore($frn, $valueDifferential);
+
+		$expectedValue = $frnStore;
+
+		$returnedValue = $this->exchange->exchange($frnBasket, $silverBasket, CommoditiesExchange::FLAG_ALLOW_DEBT);
+		$this->assertEquals($expectedValue, $returnedValue);
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

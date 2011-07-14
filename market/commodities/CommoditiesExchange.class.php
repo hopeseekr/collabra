@@ -13,6 +13,7 @@ class CommoditiesExchange
 	const FLAG_ALLOW_DEBT = 1;
 	private static $instance;
 
+	/** @return CommodityStore Returns the difference as Federal Reserve Notes.**/
 	public function exchange(CommoditiesBasket $inputBasket, CommoditiesBasket $deliverableBasket, $flags = null)
 	{
 		// 1. Obtain the valuation difference for the two commodities.
@@ -22,6 +23,7 @@ class CommoditiesExchange
 		return $this->handleValueDifference($difference, $flags);
 	}
 
+	// TODO: Rename to calculateValueDifferential()
 	/** @return float The valuation difference between two commodities **/
 	public static function getValueDifferential(CommoditiesBasket $inputBasket, CommoditiesBasket $deliverableBasket)
 	{
@@ -35,7 +37,6 @@ class CommoditiesExchange
 	{
 		$frn = CommoditiesFactory::build("Federal Reserve Note");
 		$frnStore = new CommodityStore($frn, $difference);
-
 		if ($difference < 0)
 		{
 			if (!$flags & self::FLAG_ALLOW_DEBT)
