@@ -37,5 +37,20 @@
 			</else>
 		</if>
 	</target>
+	<target name="gen_reports">
+		<!-- standards: PHPCS, Zend, PEAR, Squiz and MySource
+		     formats: checkstyle, full, summary -->
+		<phpcodesniffer
+			standard="PHPUniversity"
+			format="full"
+			showSniffs="true"
+			showWarnings="true"
+			file="."
+			docGenerator="HTML"
+			docFile="./tests/reports/html/phpcs/codingStandard.html">
+			<formatter type="summary" outfile="./tests/reports/html/phpcs/summary.txt"/>
+			<formatter type="full" outfile="./tests/reports/html/phpcs/full.txt"/>
+		</phpcodesniffer>
+	</target>
 </project>
 
