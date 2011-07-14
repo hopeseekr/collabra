@@ -77,6 +77,20 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		$this->assertAttributeEquals($expectedResults, 'commoditiesQueue', $this->basket);
 	}
 
+	public function testCannotAddACommodityWithAnNonNumericQuantity()
+	{
+		$commodity = $this->makeACommodity();
+		try
+		{
+			$this->basket->add($commodity, 'Non-Numeric Quantity');
+			$this->fail('Accepted an invalid quantity.');
+		}
+		catch(InvalidArgumentException $e)
+		{
+			$this->assertEquals("Quantity must be numerical.", $e->getMessage());
+		}
+	}
+
 	public function testAddingTheSameCommodityWillIncreaseItsQuantity()
 	{
 		$commodity = $this->makeACommodity();
@@ -155,6 +169,25 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		// Confirm it's the right commodity store.
 		$commodityStore = $this->basket->fetchCommodity($commodity->name);
 		$this->assertEquals($expectedCommodityStore, $commodityStore);
+	}
+
+	public function testWillThrowExceptionOnMissingCommodity()
+	{
+		try
+		{
+			$this->basket->fetchCommodity('Unknown commodity');
+			$this->fail('Tried to fetch an unknown commodity.');
+		}
+		catch(CommodityException $e)
+		{
+			$this->assertEquals("Commodity Not Found", $e->getMessage());
+		}
+	}
+
+	public function testReturnsZeroWorthForEmptyBaskets()
+	{
+		$value = $this->basket->getTotalValuation();
+		$this->assertEquals(0, $value);
 	}
 
 	public function testReturnsProperWorthOfACommodity()
