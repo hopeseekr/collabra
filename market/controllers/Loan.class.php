@@ -28,6 +28,8 @@ class LoanController implements CommandI
 
 		// 3. Store the loan.
 		$_SESSION['loans'][] = $loan;
+
+		ControllerCommander::dispatch(ActionsList::SHOW_HOME);
 	}
 
 	protected function grabUserInput()
