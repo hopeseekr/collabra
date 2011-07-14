@@ -55,7 +55,7 @@ class MarketTestSuite extends PHPUnit_Framework_TestSuite {
 		// Test the controllers and views.
 		$this->addTestSuite('GenericControllerTest');
 		$this->addTestSuite('PaymentControllerTest');
-//		$this->addTestSuite('LoanControllerTest');
+		$this->addTestSuite('LoanControllerTest');
 	}
 	
 	/**
