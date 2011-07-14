@@ -12,7 +12,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 class PaymentManagerTest extends PHPUnit_Framework_TestCase
 {
-	/** @var CommodityStore **/
+	/** @var PaymentManager **/
 	private $bookie;
 
 	/**
@@ -136,22 +136,3 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

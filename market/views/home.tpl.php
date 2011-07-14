@@ -82,12 +82,12 @@ if (isset($_SESSION['loans']) && isset($_SESSION['payments']))
 								<!-- TODO: This needs to be dynamically-populated! -->
 								<option value=""> --- Select --- </option>
 <?php
-	foreach ($_SESSION['loans'] as $id => $loanStore)
+	foreach ($_SESSION['loans'] as $id => /** @var CommoditiesBasket **/ $loanBasket)
 	{
-        error_log(print_r($loanStore, true));
+        print_r($loanBasket);
 		$loanLine = sprintf('%s (%.2f)', 
-		                    $loanStore['commodityStore']->commodity->name,
-		                    $loanStore['commodityStore']->commodityStore->quantity);
+		                    $loanBasket->getMeasureName(),
+		                    $loanBasket->getTotalValuation());
 ?>
 								<option value="<?php echo $id; ?>"><?php echo $loanLine; ?></option>
 <?php

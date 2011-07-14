@@ -12,7 +12,7 @@ require_once 'PHPUnit/Extensions/OutputTestCase.php';
 
 class GenericControllerTest extends PHPUnit_Extensions_OutputTestCase
 {
-	/** @var CommodityStore **/
+	/** @var GenericController **/
 	private $controller;
 	/**
 	 * Prepares the environment before running a test.
@@ -54,13 +54,14 @@ class GenericControllerTest extends PHPUnit_Extensions_OutputTestCase
 		return $html;
 	}
 
+	/* This code is probably obsolete. Remove after 2011-09-30. -Ted
 	public function testWillShow404PageForUnknownPages()
 	{
 		$errorPageHTML = $this->grabPageHTML('404');
 		$this->expectOutputString($errorPageHTML);
 	
 		$this->controller->execute("UNKNOWN ACTION");
-	}
+	}*/
 
 	public function testWillShowHomePage()
 	{

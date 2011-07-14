@@ -33,7 +33,7 @@ class PaymentManager
 	protected function ensureSaneInputs_BPB($commodityName, $quantity)
 	{
 		if (empty($commodityName) || !is_string($commodityName)) { throw new InvalidArgumentException("Commodity Name must be a string"); }
-		if (empty($quantity) || !is_numeric($quantity)) { throw new InvalidArgumentException("Quantity must be a float"); }
+		if (!is_numeric($quantity)) { throw new InvalidArgumentException("Quantity must be a float"); }
 
 		if ($quantity <= 0) { throw new OutOfBoundsException("The payment commodity quantity must be more than 0."); }
 	}
@@ -59,21 +59,8 @@ class PaymentManager
 # A class' public functions should ONLY directly aid in accomplishing the goals of the class.
 # A class' functions should NEVER be made public out of "coding convenience", as this is a sure
 # sign of improper design and a breaking of Encapsulation.
-
-		try
-		{
-			$FRNs = $comex->exchange($paymentBasket, $loanBasket);
-		}
-		catch(CommodityException $e)
-		{
-			// Since we expect the possibilty of the loan not being paid off in full,
-			// we're just going to ignore this exception but re-throw any others.
-			if ($e->getMessage() != "INSUFFICIENT FUNDS: Input is worth less than deliverable.")
-			{
-				throw $e;
-			}
-		}
-
+		$FRNs = $comex->exchange($paymentBasket, $loanBasket);
+echo "FRNs: " . $FRNs->calculateWorth() . "\n";
 		// 3. Update the loan amount.
 		// TODO: This really needs to be stored in a database.
 		$loanStore = $loanBasket->take();

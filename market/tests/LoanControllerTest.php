@@ -75,7 +75,7 @@ class LoanControllerTest extends PHPUnit_Framework_TestCase
             }
         }
     }
-    
+
     public function testWillRegisterALoan()
     {
         $_SERVER['REQUEST_METHOD'] = 'post';
@@ -88,20 +88,4 @@ class LoanControllerTest extends PHPUnit_Framework_TestCase
         file_put_contents('output.txt', serialize($_SESSION['loans']));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
