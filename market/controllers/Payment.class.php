@@ -59,7 +59,6 @@ class PaymentController implements CommandI
 		$paymentID     = fRequest::post('payment_commodity', 'integer');
 		$loanID        = fRequest::post('target_loan',       'integer');
 		$amount        = fRequest::post('loan_quantity',     'float');
-        error_log("Amount: " . $amount);
 
 		// Sanity checks.
 		$this->ensureSaneInputs_MP($paymentID, $loanID, $amount);

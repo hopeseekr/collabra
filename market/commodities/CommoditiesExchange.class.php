@@ -10,15 +10,16 @@
 /** @package CollabraMarket **/
 class CommoditiesExchange
 {
+	const FLAG_ALLOW_DEBT = 1;
 	private static $instance;
 
-	public function exchange(CommoditiesBasket $inputBasket, CommoditiesBasket $deliverableBasket)
+	public function exchange(CommoditiesBasket $inputBasket, CommoditiesBasket $deliverableBasket, $flags = null)
 	{
 		// 1. Obtain the valuation difference for the two commodities.
 		$difference = self::getValueDifferential($inputBasket, $deliverableBasket);
 
 		// 2. Return the results from $this->handleValueDifference().
-		return $this->handleValueDifference($difference);
+		return $this->handleValueDifference($difference, $flags);
 	}
 
 	/** @return float The valuation difference between two commodities **/
@@ -30,14 +31,19 @@ class CommoditiesExchange
 	}
 	
 	/** @return CommodityStore Returns the difference as Federal Reserve Notes.**/
-	protected function handleValueDifference($difference)
+	protected function handleValueDifference($difference, $flags)
 	{
 		$frn = CommoditiesFactory::build("Federal Reserve Note");
 		$frnStore = new CommodityStore($frn, $difference);
 
 		if ($difference < 0)
 		{
-			throw new CommodityException("INSUFFICIENT FUNDS: Input is worth less than deliverable.");
+			if (!$flags & self::FLAG_ALLOW_DEBT)
+			{
+				throw new CommodityException("INSUFFICIENT FUNDS: Input is worth less than deliverable.");
+			}
+			
+			echo 'success!!';
 		}
 
 		return $frnStore;
