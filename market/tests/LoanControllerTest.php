@@ -84,8 +84,10 @@ class LoanControllerTest extends PHPUnit_Framework_TestCase
                        'loan_term' => 15,
                        'loan_interest_rate' => 6.0);
 
+        ob_start();
         $this->controller->execute(ActionsList::REGISTER_LOAN);
-        file_put_contents('output.txt', serialize($_SESSION['loans']));
+        ob_clean();
+        file_put_contents(CMARKET_LIB_PATH . '/tests/data/loan-frn-50.dat', serialize($_SESSION['loans']));
     }
 }
 

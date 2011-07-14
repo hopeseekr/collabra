@@ -51,6 +51,7 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
             }
         }
 
+        ob_start();
         parent::setUp();
     }
 
@@ -59,6 +60,7 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
      */
     protected function tearDown()
     {
+    	ob_clean();
         //session_destroy();
         parent::tearDown();
     }
@@ -102,8 +104,9 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 
         // Make sure the payments array is not empty.
         $this->assertTrue(!empty($_SESSION['payments']));
-
         $this->assertEquals($expectedValue, $_SESSION['payments'][0]);
+
+        //file_put_contents(CMARKET_LIB_PATH . '/tests/data/payment-xag-1.dat', serialize($_SESSION['payments'])); exit;
     }
 
     public function testMustHaveUserInputToMakeAPayment()
@@ -167,9 +170,10 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
                        'loan_quantity' => 5.5);
 
         //$this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
-        $_SESSION['payments'] = unserialize('a:1:{i:0;O:17:"CommoditiesBasket":1:{s:33:"CommoditiesBasketcommoditiesQueue";a:1:{s:6:"Silver";O:14:"CommodityStore":2:{s:9:"commodity";O:9:"Commodity":5:{s:4:"name";s:6:"Silver";s:4:"type";s:14:"precious metal";s:16:"currentValuation";d:45;s:16:"averageValuation";d:20;s:12:"storageSpecs";O:12:"StorageSpecs":6:{s:9:"isVirtual";b:0;s:6:"weight";d:31.1035;s:10:"dimensions";a:3:{s:5:"width";i:5;s:6:"height";i:5;s:5:"depth";d:0.10;}s:9:"fragility";d:30;s:8:"toxicity";d:0;s:12:"expiresAfter";s:19:"0000-00-00 00:00:00";}}s:8:"quantity";d:1;}}}}');
-        $_SESSION['loans'] = unserialize('a:1:{i:0;a:3:{s:14:"commodityStore";O:9:"Commodity":5:{s:4:"name";s:20:"Federal Reserve Note";s:4:"type";s:10:"fiat paper";s:16:"currentValuation";d:1;s:16:"averageValuation";d:1;s:12:"storageSpecs";O:12:"StorageSpecs":6:{s:9:"isVirtual";b:1;s:6:"weight";d:1;s:10:"dimensions";a:3:{s:5:"width";d:15.5955999999999992411403582082130014896392822265625;s:6:"height";d:6.629400000000000403588273911736905574798583984375;s:5:"depth";d:0.01092199999999999941724393437425533193163573741912841796875;}s:9:"fragility";i:70;s:8:"toxicity";d:5;s:12:"expiresAfter";s:19:"0000-00-00 00:00:00";}}s:8:"loanTerm";i:15;s:12:"interestRate";d:6;}}');
-        //file_put_contents('output.txt', serialize($_SESSION['payments']));
+        $_SESSION['payments'] = unserialize(file_get_contents(CMARKET_LIB_PATH . '/tests/data/payment-xag-1.dat'));
+        $_SESSION['loans'] = unserialize(file_get_contents(CMARKET_LIB_PATH . '/tests/data/loan-frn-50.dat'));
+//		print_r($_SESSION); exit;
+        //file_put_contents('output.txt', json_encode($_SESSION['payments']));
 
         $this->controller->execute(ActionsList::MAKE_PAYMENT);
 /*
