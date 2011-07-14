@@ -18,10 +18,12 @@ class Market
 			return;
 		}
 
+		// TODO: Change CMARKET_LIB_PATH to CMARKET_PATH.
+		define('COLLABRA_PATH', realpath(dirname(__FILE__) . '/../'));
 		define('CMARKET_LIB_PATH', dirname(__FILE__));
 
 		// Init the Flourish library.
-		include CMARKET_LIB_PATH . '/lib/flourish/Flourish.php';
+		include COLLABRA_PATH . '/lib/flourish/Flourish.php';
 		Flourish::init();
 
 		include CMARKET_LIB_PATH . '/api/Command.interface.php';
