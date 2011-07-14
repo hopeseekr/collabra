@@ -19,11 +19,13 @@ class LoanManager
 
 		// 2. Build the loan.
 		$commodity = CommoditiesFactory::build($commodityName);
-        $commodityStore = new CommodityStore($commodity, $quantity);
 
-		$loan = array('commodityStore' => $commodityStore,
-		              'loanTerm'       => $loanTerm,
-		              'interestRate'   => $interestRate);
+		$commodityBasket = new CommoditiesBasket();
+		$commodityBasket->add($commodity, $quantity);
+
+		$loan = array('basket'       => $commodityBasket,
+		              'loanTerm'     => $loanTerm,
+		              'interestRate' => $interestRate);
 
 		return $loan;
 	}
