@@ -19,7 +19,7 @@ class LoanControllerTest extends PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-        $this->controller = new LoanController;
+		$this->controller = new LoanController;
 		parent::setUp();
 	}
 
@@ -30,7 +30,7 @@ class LoanControllerTest extends PHPUnit_Framework_TestCase
 	{
 		parent::tearDown();
 	}
-	
+
 	/**
 	 * Constructs the test case.
 	 */
@@ -38,56 +38,56 @@ class LoanControllerTest extends PHPUnit_Framework_TestCase
 	{
 	}
 
-    public function testWillNotRegisterALoanWithoutUserInput()
-    {
-        try
-        {
-            $this->controller->execute(ActionsList::REGISTER_LOAN);
-            $this->fail('Worked without any user input');
-        }
-        catch (ControllerException $e)
-        {
-            $this->assertEquals(ControllerException::INVALID_USER_INPUT, $e->getCode());
-        }
-    }
-    
-    public function testRequiresSaneInputs()
-    {
-        $_SERVER['REQUEST_METHOD'] = 'post';
-        $goodData = array('loan_commodity' => 'Federal Reserve Note',
-                       'loan_quantity'  => 8500.00,
-                       'loan_term' => 15,
-                       'loan_interest_rate' => 6.0);
-        
-        $testParams = array('loan_quantity', 'loan_term', 'loan_interest_rate');
-        foreach ($testParams as $param)
-        {
-            $_POST = $goodData;
-            $_POST[$param] = -5;
+	public function testWillNotRegisterALoanWithoutUserInput()
+	{
+		try
+		{
+			$this->controller->execute(ActionsList::REGISTER_LOAN);
+			$this->fail('Worked without any user input');
+		}
+		catch (ControllerException $e)
+		{
+			$this->assertEquals(ControllerException::INVALID_USER_INPUT, $e->getCode());
+		}
+	}
 
-            try
-            {
-                $this->controller->execute(ActionsList::REGISTER_LOAN);
-                $this->fail("Worked with invalid $param");
-            }
-            catch (OutOfBoundsException $e)
-            {
-            }
-        }
-    }
+	public function testRequiresSaneInputs()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'post';
+		$goodData = array('loan_commodity' => 'Federal Reserve Note',
+						  'loan_quantity'  => 8500.00,
+						  'loan_term' => 15,
+						  'loan_interest_rate' => 6.0);
+		
+		$testParams = array('loan_quantity', 'loan_term', 'loan_interest_rate');
+		foreach ($testParams as $param)
+		{
+			$_POST = $goodData;
+			$_POST[$param] = -5;
 
-    public function testWillRegisterALoan()
-    {
-        $_SERVER['REQUEST_METHOD'] = 'post';
-        $_POST = array('loan_commodity' => 'Federal Reserve Note',
-                       'loan_quantity'  => 8500.00,
-                       'loan_term' => 15,
-                       'loan_interest_rate' => 6.0);
+			try
+			{
+				$this->controller->execute(ActionsList::REGISTER_LOAN);
+				$this->fail("Worked with invalid $param");
+			}
+			catch (OutOfBoundsException $e)
+			{
+			}
+		}
+	}
 
-        ob_start();
-        $this->controller->execute(ActionsList::REGISTER_LOAN);
-        ob_clean();
-        file_put_contents(CMARKET_LIB_PATH . '/tests/data/loan-frn-50.dat', serialize($_SESSION['loans']));
-    }
+	public function testWillRegisterALoan()
+	{
+		$_SERVER['REQUEST_METHOD'] = 'post';
+		$_POST = array('loan_commodity' => 'Federal Reserve Note',
+		               'loan_quantity'  => 8500.00,
+		               'loan_term' => 15,
+		               'loan_interest_rate' => 6.0);
+
+		ob_start();
+		$this->controller->execute(ActionsList::REGISTER_LOAN);
+		ob_clean();
+		file_put_contents(CMARKET_LIB_PATH . '/tests/data/loan-frn-50.dat', serialize($_SESSION['loans']));
+	}
 }
 
