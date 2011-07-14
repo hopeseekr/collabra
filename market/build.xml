@@ -20,24 +20,7 @@
 			/>
 		<exec dir="tests" command="phpunit --coverage-html reports/html/coverage --testdox-html reports/html/docs.html MarketTestSuite.php" />
 	</target>
-	<target name="run_ci_tasks">
-		<exec
-		    dir="."
-		    command="bzr log --line --limit 20 | md5sum | awk '{print $1}' | diff -u build.md5 -"
-			outputProperty="isNewBuild"/>
-		<if>
-			<equals arg1="${isNewBuild}" arg2=""/>
-			<then>
-				<echo msg="Build is up to date"/>
-			</then>
-			<else>
-				<echo msg="Build is out of date"/>
-				<phingcall target="unit_tests"/>
-				<exec dir="." command="bzr log --line --limit 20 | md5sum | awk '{print $1}' > build.md5" />
-			</else>
-		</if>
-	</target>
-	<target name="gen_reports">
+	<target name="phpcs">
 		<!-- standards: PHPCS, Zend, PEAR, Squiz and MySource
 		     formats: checkstyle, full, summary -->
 		<phpcodesniffer
@@ -51,6 +34,24 @@
 			<formatter type="summary" outfile="./tests/reports/html/phpcs/summary.txt"/>
 			<formatter type="full" outfile="./tests/reports/html/phpcs/full.txt"/>
 		</phpcodesniffer>
+	</target>
+	<target name="run_ci_tasks">
+		<exec
+		    dir="."
+		    command="bzr log --line --limit 20 | md5sum | awk '{print $1}' | diff -u build.md5 -"
+			outputProperty="isNewBuild"/>
+		<if>
+			<equals arg1="${isNewBuild}" arg2=""/>
+			<then>
+				<echo msg="Build is up to date"/>
+			</then>
+			<else>
+				<echo msg="Build is out of date"/>
+				<phingcall target="unit_tests"/>
+				<phingcall target="phpcs"/>
+				<exec dir="." command="bzr log --line --limit 20 | md5sum | awk '{print $1}' > build.md5" />
+			</else>
+		</if>
 	</target>
 </project>
 
