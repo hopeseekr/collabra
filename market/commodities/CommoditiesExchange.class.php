@@ -42,8 +42,6 @@ class CommoditiesExchange
 			{
 				throw new CommodityException("INSUFFICIENT FUNDS: Input is worth less than deliverable.");
 			}
-			
-			echo 'success!!';
 		}
 
 		return $frnStore;
