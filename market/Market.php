@@ -6,11 +6,17 @@
   * Copyright(c) 2011 Theodore R. Smith <theodore@phpexperts.pro>
   * All rights reserved.
  **/
-
+ 
 class Market
 {
 	private function __construct() { }
 	public static function init()
+	{
+		spl_autoload_register(array(__CLASS__, 'includeFiles'));
+		self::includeFiles();
+	}
+	
+	public static function includeFiles()
 	{
 		if (defined('CMARKET_LIB_PATH'))
 		{
