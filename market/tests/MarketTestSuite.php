@@ -38,7 +38,7 @@ class MarketTestSuite extends PHPUnit_Framework_TestSuite {
 
         // Ignore libraries code coverage.
         $coverageFilter = PHP_CodeCoverage_Filter::getInstance();
-        $coverageFilter->addDirectoryToBlacklist(CMARKET_LIB_PATH . '/lib/flourish');
+        $coverageFilter->addDirectoryToBlacklist(COLLABRA_PATH . '/lib');
         
 		// Test Datatypes.
 		$this->addTestSuite('CommodityStoreTest');
