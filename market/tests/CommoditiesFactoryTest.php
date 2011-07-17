@@ -56,6 +56,9 @@ class CommoditiesFactoryTest extends PHPUnit_Framework_TestCase
 		return $silver;
 	}
 
+	/**
+	 * @covers CommoditiesFactory::build
+	 **/
 	public function testCannotBuildUnknownCommodities()
 	{
 		$badCommodity = 'Bad Commodity 22233';
@@ -70,13 +73,18 @@ class CommoditiesFactoryTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+	/**
+	 * @covers CommoditiesFactory::build
+	 **/
 	public function testWillSuccessfullyBuildKnownCommodities()
 	{
 		$expectedResult = $this->makeSilverCommodity();
 
 		$result = CommoditiesFactory::build('Silver');
-
 		$this->assertEquals($expectedResult, $result);
+
+		$result = CommoditiesFactory::build('Federal Reserve Note');
+		$this->assertEquals('Federal Reserve Note', $result->name);
 	}
 }
 

@@ -54,15 +54,9 @@ class GenericControllerTest extends PHPUnit_Extensions_OutputTestCase
 		return $html;
 	}
 
-	/* This code is probably obsolete. Remove after 2011-09-30. -Ted
-	public function testWillShow404PageForUnknownPages()
-	{
-		$errorPageHTML = $this->grabPageHTML('404');
-		$this->expectOutputString($errorPageHTML);
-	
-		$this->controller->execute("UNKNOWN ACTION");
-	}*/
-
+	/**
+	 * @covers GenericController::execute
+	 **/
 	public function testWillShowHomePage()
 	{
 		$homePageHTML = $this->grabPageHTML('home');
@@ -71,6 +65,9 @@ class GenericControllerTest extends PHPUnit_Extensions_OutputTestCase
 		$this->controller->execute(ActionsList::SHOW_HOME);
 	}
 
+	/**
+	 * @covers GenericController::execute
+	 **/
 	public function testWillShow404PageOnDemand()
 	{
 		$errorPageHTML = $this->grabPageHTML('404');

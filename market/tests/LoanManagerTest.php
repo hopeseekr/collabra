@@ -10,15 +10,20 @@
 require_once 'bootstrap.inc.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
+/**
+* @covers LoanManager
+*/
 class LoanManagerTest extends PHPUnit_Framework_TestCase
 {
-	/** @var CommodityStore **/
-	private $commodityStore;
+	/** @var LoanManager **/
+	private $lender;
+
 	/**
 	 * Prepares the environment before running a test.
 	 */
 	protected function setUp()
 	{
+		$this->lender = new LoanManager;
 		parent::setUp();
 	}
 
@@ -35,6 +40,12 @@ class LoanManagerTest extends PHPUnit_Framework_TestCase
 	 */
 	public function __construct()
 	{
+	}
+
+	public function testCanBuildALoan()
+	{
+		$loan = $this->lender->buildLoan('FRN', 5, 5, 0.5);
+		$this->assertInternalType('array', $loan);
 	}
 }
 

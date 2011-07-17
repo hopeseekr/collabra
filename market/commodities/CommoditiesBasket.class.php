@@ -20,20 +20,26 @@ class CommoditiesBasket
 	/** @var Commodity **/
 	protected $measureCommodity;
 
-	public function __construct($measureCommodity = null)
+	public function __construct()
 	{
-		if (!$measureCommodity)
+		// TODO: Make it so that a CommoditiesBasket can be measured in any commodity.
+		/*if (!$measureCommodity)
 		{
 			$measureCommodity = CommoditiesFactory::build('FRN');
 		}
 
 		$this->measureCommodity = $measureCommodity;
+		*/
+		$this->measureCommodity = CommoditiesFactory::build('FRN');
 	}
 
 	/**
 	* @return Commodity The commodity the basket is valuated at.
 	*/
-	public function getMeasureName() { return $this->measureCommodity->name; }
+	public function getMeasureName()
+	{
+		return $this->measureCommodity->name;
+	}
 	
 	/** Adds a commodity to the basket.
 	  * @param Commodity

@@ -49,6 +49,9 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 		return $basket;
 	}
 
+	/**
+	 * @covers CommoditiesExchange::getValueDifferential
+	 **/
 	public function testReturnsDifferentialBetweenTwoBaskets()
 	{
 		$frnBasket1 = $this->createBasket('Federal Reserve Note', 30);
@@ -60,6 +63,10 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expectedValue, $returnedValue);
 	}
 
+	/**
+	 * @covers CommoditiesExchange::exchange
+	 * @covers CommoditiesExchange::handleValueDifference
+	 **/
 	public function testWillThrowInsufficientFundsOnANegativeBalanceBarterByDefault()
 	{
 		try
@@ -76,6 +83,10 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+	/**
+	 * @covers CommoditiesExchange::exchange
+	 * @covers CommoditiesExchange::handleValueDifference
+	 **/
 	public function testCanExchangeTwoCommoditiesReturningFrnAsDifference()
 	{
 		$silverBasket = $this->createBasket('Silver', 1);
@@ -93,6 +104,10 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 
 	}
 
+	/**
+	 * @covers CommoditiesExchange::exchange
+	 * @covers CommoditiesExchange::handleValueDifference
+	 **/
 	public function testCanExchangeTwoCommoditiesOnCredit()
 	{
 		$silverBasket = $this->createBasket('Silver', 1);

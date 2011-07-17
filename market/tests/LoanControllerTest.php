@@ -10,6 +10,9 @@
 require_once 'bootstrap.inc.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
+/**
+ * @covers LoanController
+ **/
 class LoanControllerTest extends PHPUnit_Framework_TestCase
 {
 	/** @var LoanController **/
@@ -99,4 +102,3 @@ class LoanControllerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expectedValue, $_SESSION['loans'][0]);
 	}
 }
-

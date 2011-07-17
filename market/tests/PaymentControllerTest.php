@@ -10,19 +10,10 @@
 require_once 'bootstrap.inc.php';
 require_once 'PHPUnit/Extensions/OutputTestCase.php';
 
-/*class PaymentManagerStub extends PaymentManager
-{
-	// TODO: Refactor the $loan array to a proper Loan object.
-	public function handlePaymentTransaction(CommoditiesBasket $paymentBasket, array $loan, $amount)
-	{
-//		$FRNs = buildBasket('Federal Reserve Note', 55);
-		$lender = new LoanManager;
-		$lender->buildLoan(55)
 
-		return $FRNs;
-	}
-}*/
-
+/**
+ * @covers PaymentController
+ **/
 class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 {
 	/** @var PaymentController **/
@@ -35,17 +26,7 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 	 */
 	protected function setUp()
 	{
-		/*
-		$FRNs = buildBasket('Federal Reserve Note', 55);
-
-		$bookieStub = $this->getMock('PaymentManager');
-		$bookieStub->expects($this->any())
-		           ->method('handlePaymentTransaction')
-		           ->will($this->returnValue($FRNs));
-		*/
-		//$bookieStub = new PaymentManagerStub;
-		$bookie = new PaymentManager;
-		$this->controller = new PaymentController($bookie);
+		$this->controller = new PaymentController(new PaymentManager);
 		if (!headers_sent())
 		{
 			if (!self::$session_id)

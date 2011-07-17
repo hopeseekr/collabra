@@ -13,7 +13,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 
 class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 {
-	/** @var CommodityStore **/
+	/** @var CommoditiesBasket **/
 	private $basket;
 	/**
 	 * Prepares the environment before running a test.
@@ -50,11 +50,25 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		return $commodity;
 	}
 
+	/**
+	 * @covers CommoditiesBasket::__construct
+	 **/
 	public function testStartsOutEmpty()
 	{
 		$this->assertAttributeEquals(null, 'commoditiesQueue', $this->basket);
 	}
 
+	/**
+	 * @covers CommoditiesBasket::getMeasureName
+	 **/
+	public function testCanRetrieveNameOfCommodityMeasure()
+	{
+		$this->assertEquals('Federal Reserve Note', $this->basket->getMeasureName());
+	}
+
+	/**
+	 * @covers CommoditiesBasket::add
+	 **/
 	public function testCanAddACommodity()
 	{
 		$commodity = $this->makeACommodity();
@@ -66,6 +80,9 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		$this->assertAttributeEquals($expectedResults, 'commoditiesQueue', $this->basket);
 	}
 
+	/**
+	 * @covers CommoditiesBasket::add
+	 **/
 	public function testWillAddOneCommodityByDefault()
 	{
 		$commodity = $this->makeACommodity();
@@ -77,6 +94,9 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		$this->assertAttributeEquals($expectedResults, 'commoditiesQueue', $this->basket);
 	}
 
+	/**
+	 * @covers CommoditiesBasket::add
+	 **/
 	public function testCannotAddACommodityWithAnNonNumericQuantity()
 	{
 		$commodity = $this->makeACommodity();
@@ -91,6 +111,9 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+	/**
+	 * @covers CommoditiesBasket::add
+	 **/
 	public function testAddingTheSameCommodityWillIncreaseItsQuantity()
 	{
 		$commodity = $this->makeACommodity();
@@ -103,6 +126,9 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		$this->assertAttributeEquals($expectedResults, 'commoditiesQueue', $this->basket);
 	}
 
+	/**
+	 * @covers CommoditiesBasket::add
+	 **/
 	public function testMultipleCommoditiesCanBeAdded()
 	{
 		$commodity = $this->makeACommodity();
@@ -117,6 +143,9 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		$this->assertAttributeEquals($expectedResults, 'commoditiesQueue', $this->basket);
 	}
 
+	/**
+	 * @covers CommoditiesBasket::take
+	 **/
 	public function testTakingFromAnEmptyBasketWontWork()
 	{
 		try
@@ -130,6 +159,9 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+	/**
+	 * @covers CommoditiesBasket::take
+	 **/
 	public function testTakesFirstCommodityFromTheBasket()
 	{
 		// Add two things to the Basket.
@@ -149,6 +181,9 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		$this->assertAttributeEquals($expectedResults, 'commoditiesQueue', $this->basket);
 	}
 
+	/**
+	 * @covers CommoditiesBasket::fetchCommodity
+	 **/
 	public function testCanRetrieveASpecificCommodity()
 	{
 		// Add two things to the Basket.
@@ -163,6 +198,9 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expectedCommodityStore, $commodityStore);
 	}
 
+	/**
+	 * @covers CommoditiesBasket::fetchCommodity
+	 **/
 	public function testWillThrowExceptionOnMissingCommodity()
 	{
 		try
@@ -176,12 +214,18 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+	/**
+	 * @covers CommoditiesBasket::getTotalValuation
+	 **/
 	public function testReturnsZeroWorthForEmptyBaskets()
 	{
 		$value = $this->basket->getTotalValuation();
 		$this->assertEquals(0, $value);
 	}
 
+	/**
+	 * @covers CommoditiesBasket::getTotalValuation
+	 **/
 	public function testReturnsProperWorthOfACommodity()
 	{
 		// Add one thing to the Basket.
@@ -198,14 +242,29 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 
 	}
 
+	/**
+	 * @covers CommoditiesBasket::getTotalValuation
+	 **/
+	public function testCanBeMeasuredInAnyCommodity()
+	{
+		$this->markTestIncomplete();
+		$FRNs = CommoditiesFactory::build('Federal Reserve Note');
+
+		$silver = CommoditiesFactory::build('Silver');
+		$silver->currentValuation = 50;
+		$this->basket = new CommoditiesBasket($silver);
+		$this->basket->add($FRNs, 10);
+
+		$expectedValue = 40;
+
+		$this->assertEquals($expectedValue, $this->basket->getTotalValuation());
+	}
+
+	/**
+	 * @covers CommoditiesBasket::dumpStats
+	 **/
 	public function testWillAccuratelyReturnStatistics()
 	{
-/*
-             $stats[] = array('name'      => $commodityName,
-                              'valuation' => $store->commodity->currentValuation,
-                              'quantity'  => $store->quantity,
-                              'subtotal'  => $store->calculateWorth());
-*/
 		// Add two things to the Basket.
 		$this->testMultipleCommoditiesCanBeAdded();
 
@@ -220,9 +279,6 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		                         'quantity'  => 2,
 		                         'subtotal'  => 4.0);
 		$this->assertEquals($expectedStats, $this->basket->dumpStats());
-
-//		$this->asserts(false);
 	}
-
 }
 
