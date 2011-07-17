@@ -41,18 +41,18 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 	}
 
 	// TODO: Migrate over to a CommoditiesFactory::buildBasket() factory.
-    protected function buildPaymentBasket($commodityName, $quantity)
-    {
-        $commodity = CommoditiesFactory::build($commodityName);
-        $basket = new CommoditiesBasket;
+	protected function buildPaymentBasket($commodityName, $quantity)
+	{
+		$commodity = CommoditiesFactory::build($commodityName);
+		$basket = new CommoditiesBasket;
 		$basket->add($commodity, $quantity);
 
-        return $basket;
-    }
+		return $basket;
+	}
 
-    /**
-    * @group PaymentManager::buildPaymentBasket
-    */
+	/**
+	* @group PaymentManager::buildPaymentBasket
+	*/
 	public function testWillNotBuildABasketWithAnInvalidCommodityName()
 	{
 		try
@@ -69,9 +69,9 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
-    /**
-    * @group PaymentManager::buildPaymentBasket
-    */
+	/**
+	* @group PaymentManager::buildPaymentBasket
+	*/
 	public function testWillNotBuildABasketWithAnInvalidQuantity()
 	{
 		try
@@ -88,9 +88,9 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
-    /**
-    * @group PaymentManager::buildPaymentBasket
-    */
+	/**
+	* @group PaymentManager::buildPaymentBasket
+	*/
 	public function testWillNotBuildABasketWithAEqualToOrLesserThanZeroQuantity()
 	{
 		try
@@ -120,9 +120,9 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
-    /**
-    * @group PaymentManager::buildPaymentBasket
-    */
+	/**
+	* @group PaymentManager::buildPaymentBasket
+	*/
 	public function testWillBuildACommoditiesBasket()
 	{
 		$expectedValue = $this->buildPaymentBasket('Silver', 5);
@@ -131,10 +131,10 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expectedValue, $returnedValue);
 	}
 
-    /**
-    * @group PaymentManager::handlePaymentTransaction
-    */
-    public function testWillNotAcceptNegativePayments()
+	/**
+	* @group PaymentManager::handlePaymentTransaction
+	*/
+	public function testWillNotAcceptNegativePayments()
 	{
 		$paymentBasket = $this->buildPaymentBasket('Silver', -5);
 
@@ -172,3 +172,4 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expectedValue, $loanBasket->getTotalValuation(), 'Returned an unexpected valuation.');
 	}
 }
+

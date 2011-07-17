@@ -31,14 +31,14 @@ class SecurityManager
 		}
 	}
 
-    protected function ensureValidURL($url)
-    {
-        if (filter_var($url, FILTER_VALIDATE_URL) == false)
-        {
-            throw new RuntimeException("Invalid URL.");
-        }
-    }
-    
+	protected function ensureValidURL($url)
+	{
+		if (filter_var($url, FILTER_VALIDATE_URL) == false)
+		{
+			throw new RuntimeException("Invalid URL.");
+		}
+	}
+	
 	public function guardEntrance(User $user, $url)
 	{
 		$this->ensureValidURL($url);

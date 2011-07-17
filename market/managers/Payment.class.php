@@ -14,7 +14,7 @@ class PaymentManager
 	  * @param float $quantity
 	  * @return CommodityBasket
 	  */
-    public function buildPaymentBasket($commodityName, $quantity)
+	public function buildPaymentBasket($commodityName, $quantity)
 	{
 		// 1. Sanity checks.
 		$this->ensureSaneInputs_BPB($commodityName, $quantity);
@@ -46,7 +46,7 @@ class PaymentManager
 	  * @param float $amount
 	  * @return array A loan with the differential between $paymentBasket and $loan
 	  */
-    public function handlePaymentTransaction(CommoditiesBasket $paymentBasket, array $loan, $amount)
+	public function handlePaymentTransaction(CommoditiesBasket $paymentBasket, array $loan, $amount)
 	{
 		// 1. Sanity checks.
 		if ($paymentBasket->getTotalValuation() <= 0) { throw new OutOfBoundsException("The payment commodity amount must be more than 0."); }
@@ -69,7 +69,7 @@ class PaymentManager
 		$loanStore = $loanBasket->take();
 		$modifiedLoanCommodity = CommoditiesFactory::build($loanStore->commodity->name);
 		$modifiedLoanBasket = new CommoditiesBasket;
-        $modifiedLoanBasket->add($modifiedLoanCommodity, $FRNs->quantity * -1);
+		$modifiedLoanBasket->add($modifiedLoanCommodity, $FRNs->quantity * -1);
 //printf("Modified loan value: %.2f\n", $modifiedLoanBasket->getTotalValuation());
 
 		$lender = new LoanManager;

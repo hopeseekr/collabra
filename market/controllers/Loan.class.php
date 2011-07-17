@@ -17,7 +17,7 @@ class LoanController implements CommandI
 		}
 	}
 
-    protected function registerLoan()
+	protected function registerLoan()
 	{
 		// 1. Grab the form data.
 		list($commodityName, $quantity, $loanTerm, $interestRate) = $this->grabUserInput();

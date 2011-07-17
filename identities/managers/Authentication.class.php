@@ -12,23 +12,23 @@
 // people are who they say they are, or referring them to The Bouncer.
 
 class AuthenticationManager
+{
+	public function __construct(SecurityManager $bouncer)
 	{
-        public function __construct(SecurityManager $bouncer)
-        {
-            
-        }
 
-        public function authenticateUser(User $user)
-        {
-            // TODO: Build this out.
-			// MOCK: Hard code to reply that "test/test" is a valid person.
-
-			if ($user->username == "test" && $user->password == "test")
-			{
-				return true;
-			}
-
-			throw new RuntimeException("You have not been properly validated.");
-        }
 	}
+
+	public function authenticateUser(User $user)
+	{
+		// TODO: Build this out.
+		// MOCK: Hard code to reply that "test/test" is a valid person.
+
+		if ($user->username == "test" && $user->password == "test")
+		{
+			return true;
+		}
+
+		throw new RuntimeException("You have not been properly validated.");
+	}
+}
 

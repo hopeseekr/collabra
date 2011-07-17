@@ -21,6 +21,6 @@ class GenericController implements CommandI
 			require CMARKET_LIB_PATH . '/views/404.tpl.php';
 		}
 
-        return true;
+		return true;
 	}
 }

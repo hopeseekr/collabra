@@ -26,8 +26,9 @@ require_once CMARKET_LIB_PATH . '/tests/LoanManagerTest.php';
  * Static test suite.
  */
 // @codeCoverageIgnoreStart
-class MarketTestSuite extends PHPUnit_Framework_TestSuite {
-	 protected $topTestSuite = true;
+class MarketTestSuite extends PHPUnit_Framework_TestSuite
+{
+	protected $topTestSuite = true;
 	/**
 	 * Constructs the test suite handler.
 	 */
@@ -36,10 +37,10 @@ class MarketTestSuite extends PHPUnit_Framework_TestSuite {
 		ob_start();
 		$this->setName('MarketTestSuite');
 
-        // Ignore libraries code coverage.
-        $coverageFilter = PHP_CodeCoverage_Filter::getInstance();
-        $coverageFilter->addDirectoryToBlacklist(COLLABRA_PATH . '/lib');
-        
+		// Ignore libraries code coverage.
+		$coverageFilter = PHP_CodeCoverage_Filter::getInstance();
+		$coverageFilter->addDirectoryToBlacklist(COLLABRA_PATH . '/lib');
+		
 		// Test Datatypes.
 		$this->addTestSuite('CommodityStoreTest');
 
