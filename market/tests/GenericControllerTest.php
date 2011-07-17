@@ -41,7 +41,7 @@ class GenericControllerTest extends PHPUnit_Extensions_OutputTestCase
 
 	protected function grabPageHTML($page)
 	{
-		$filename = CMARKET_LIB_PATH . '/views/' . $page  . '.tpl.php';
+		$filename = CMARKET_PATH . '/views/' . $page  . '.tpl.php';
 		if (!file_exists($filename))
 		{
 			$this->assert(false, "Template file $page.tpl.php not found.");

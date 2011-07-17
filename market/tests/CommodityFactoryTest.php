@@ -10,7 +10,7 @@
 require_once 'bootstrap.inc.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
-class CommoditiesFactoryTest extends PHPUnit_Framework_TestCase
+class CommodityFactoryTest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * Prepares the environment before running a test.
@@ -57,14 +57,14 @@ class CommoditiesFactoryTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers CommoditiesFactory::build
+	 * @covers CommodityFactory::build
 	 **/
 	public function testCannotBuildUnknownCommodities()
 	{
 		$badCommodity = 'Bad Commodity 22233';
 		try
 		{
-			CommoditiesFactory::build($badCommodity);
+			CommodityFactory::build($badCommodity);
 			$this->fail('Attempted to build an unknown commodity.');
 		}
 		catch (CommodityException $e)
@@ -74,16 +74,16 @@ class CommoditiesFactoryTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers CommoditiesFactory::build
+	 * @covers CommodityFactory::build
 	 **/
 	public function testWillSuccessfullyBuildKnownCommodities()
 	{
 		$expectedResult = $this->makeSilverCommodity();
 
-		$result = CommoditiesFactory::build('Silver');
+		$result = CommodityFactory::build('Silver');
 		$this->assertEquals($expectedResult, $result);
 
-		$result = CommoditiesFactory::build('Federal Reserve Note');
+		$result = CommodityFactory::build('Federal Reserve Note');
 		$this->assertEquals('Federal Reserve Note', $result->name);
 	}
 }

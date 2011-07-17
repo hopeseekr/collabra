@@ -8,7 +8,7 @@
  **/
 
 /** @package CollabraMarket **/
-class CommoditiesFactory
+class CommodityFactory
 {
 	/** @return Commodity **/
 	public static function build($name)

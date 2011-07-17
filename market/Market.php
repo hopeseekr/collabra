@@ -18,38 +18,37 @@ class Market
 	
 	public static function includeFiles()
 	{
-		if (defined('CMARKET_LIB_PATH'))
+		if (defined('CMARKET_PATH'))
 		{
 			// It seems the library has already been initialized; bail.
 			return;
 		}
 
-		// TODO: Change CMARKET_LIB_PATH to CMARKET_PATH.
 		define('COLLABRA_PATH', realpath(dirname(__FILE__) . '/../'));
-		define('CMARKET_LIB_PATH', dirname(__FILE__));
+		define('CMARKET_PATH', dirname(__FILE__));
 
 		// Init the Flourish library.
 		include COLLABRA_PATH . '/lib/flourish/Flourish.php';
 		Flourish::init();
 
-		include CMARKET_LIB_PATH . '/api/Command.interface.php';
-		include CMARKET_LIB_PATH . '/api/View.interface.php';
+		include CMARKET_PATH . '/api/Command.interface.php';
+		include CMARKET_PATH . '/api/View.interface.php';
 
-		include CMARKET_LIB_PATH . '/models/Commodity.datatype.php';
-		include CMARKET_LIB_PATH . '/models/CommodityStore.datatype.php';
-		include CMARKET_LIB_PATH . '/models/ActionsList.datatype.php';
+		include CMARKET_PATH . '/models/Commodity.datatype.php';
+		include CMARKET_PATH . '/models/CommodityStore.datatype.php';
+		include CMARKET_PATH . '/models/ActionsList.datatype.php';
 
-		include CMARKET_LIB_PATH . '/commodities/CommoditiesBasket.class.php';
-		include CMARKET_LIB_PATH . '/commodities/CommoditiesExchange.class.php';
-		include CMARKET_LIB_PATH . '/commodities/CommoditiesFactory.class.php';
+		include CMARKET_PATH . '/commodities/CommodityBasket.class.php';
+		include CMARKET_PATH . '/commodities/CommoditiesExchange.class.php';
+		include CMARKET_PATH . '/commodities/CommodityFactory.class.php';
 
-		include CMARKET_LIB_PATH . '/controllers/ControllerCommander.class.php';
-		include CMARKET_LIB_PATH . '/controllers/Generic.class.php';
-		include CMARKET_LIB_PATH . '/controllers/Loan.class.php';
-		include CMARKET_LIB_PATH . '/controllers/Payment.class.php';
+		include CMARKET_PATH . '/controllers/ControllerCommander.class.php';
+		include CMARKET_PATH . '/controllers/Generic.class.php';
+		include CMARKET_PATH . '/controllers/Loan.class.php';
+		include CMARKET_PATH . '/controllers/Payment.class.php';
 
-		include CMARKET_LIB_PATH . '/managers/Payment.class.php';
-		include CMARKET_LIB_PATH . '/managers/Loan.class.php';
+		include CMARKET_PATH . '/managers/Payment.class.php';
+		include CMARKET_PATH . '/managers/Loan.class.php';
 	}
 }
 

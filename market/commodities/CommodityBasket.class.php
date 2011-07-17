@@ -10,7 +10,7 @@
 /** 
   @package CollabraMarket
 **/
-class CommoditiesBasket
+class CommodityBasket
 {
 	// TODO: Determine a more descriptive name for array($commodity, $quantity)
 	/** @var Commodity[] An array of Commodities **/
@@ -22,15 +22,15 @@ class CommoditiesBasket
 
 	public function __construct()
 	{
-		// TODO: Make it so that a CommoditiesBasket can be measured in any commodity.
+		// TODO: Make it so that a CommodityBasket can be measured in any commodity.
 		/*if (!$measureCommodity)
 		{
-			$measureCommodity = CommoditiesFactory::build('FRN');
+			$measureCommodity = CommodityFactory::build('FRN');
 		}
 
 		$this->measureCommodity = $measureCommodity;
 		*/
-		$this->measureCommodity = CommoditiesFactory::build('FRN');
+		$this->measureCommodity = CommodityFactory::build('FRN');
 	}
 
 	/**

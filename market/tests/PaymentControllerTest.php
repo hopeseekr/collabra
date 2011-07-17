@@ -91,7 +91,7 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 		$this->assertTrue(!empty($_SESSION['payments']));
 		$this->assertEquals($expectedValue, $_SESSION['payments'][0]);
 
-		//file_put_contents(CMARKET_LIB_PATH . '/tests/data/payment-xag-1.dat', serialize($_SESSION['payments'])); exit;
+		//file_put_contents(CMARKET_PATH . '/tests/data/payment-xag-1.dat', serialize($_SESSION['payments'])); exit;
 	}
 
 	public function testMustHaveUserInputToMakeAPayment()
@@ -155,8 +155,8 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 		               'loan_quantity'     => 5.5);
 
 		//$this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
-		$_SESSION['payments'] = unserialize(file_get_contents(CMARKET_LIB_PATH . '/tests/data/payment-xag-1.dat'));
-		$_SESSION['loans'] = unserialize(file_get_contents(CMARKET_LIB_PATH . '/tests/data/loan-frn-50.dat'));
+		$_SESSION['payments'] = unserialize(file_get_contents(CMARKET_PATH . '/tests/data/payment-xag-1.dat'));
+		$_SESSION['loans'] = unserialize(file_get_contents(CMARKET_PATH . '/tests/data/loan-frn-50.dat'));
 //		print_r($_SESSION); exit;
 		//file_put_contents('output.txt', json_encode($_SESSION['payments']));
 

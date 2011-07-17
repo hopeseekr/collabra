@@ -10,7 +10,7 @@
 class LoanManager
 {
 	// TODO: Refactor LoanManager::buildLoan into a Factory.
-	// TODO: Refactor to replace CommodityStore with CommoditiesBasket.
+	// TODO: Refactor to replace CommodityStore with CommodityBasket.
 	// TODO: Refactor to remove $quantity.
 	/**
 	  * @return array[CommodityStore, float $quantity, int $loanTerm, float $interestRate]
@@ -21,9 +21,9 @@ class LoanManager
 		$this->ensureSaneInputs($commodityName, $quantity, $loanTerm, $interestRate);
 
 		// 2. Build the loan.
-		$commodity = CommoditiesFactory::build($commodityName);
+		$commodity = CommodityFactory::build($commodityName);
 
-		$commodityBasket = new CommoditiesBasket();
+		$commodityBasket = new CommodityBasket();
 		$commodityBasket->add($commodity, $quantity);
 
 		$loan = array('basket'       => $commodityBasket,

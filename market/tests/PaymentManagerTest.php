@@ -40,11 +40,11 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 	{
 	}
 
-	// TODO: Migrate over to a CommoditiesFactory::buildBasket() factory.
+	// TODO: Migrate over to a CommodityFactory::buildBasket() factory.
 	protected function buildPaymentBasket($commodityName, $quantity)
 	{
-		$commodity = CommoditiesFactory::build($commodityName);
-		$basket = new CommoditiesBasket;
+		$commodity = CommodityFactory::build($commodityName);
+		$basket = new CommodityBasket;
 		$basket->add($commodity, $quantity);
 
 		return $basket;
@@ -111,7 +111,7 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 	/**
 	* @group PaymentManager::buildPaymentBasket
 	*/
-	public function testWillBuildACommoditiesBasket()
+	public function testWillBuildACommodityBasket()
 	{
 		$expectedValue = $this->buildPaymentBasket('Silver', 5);
 		$returnedValue = $this->bookie->buildPaymentBasket('Silver', 5);

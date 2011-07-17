@@ -19,8 +19,8 @@ Market::init();
 $silver = CommoditiesFactory::build("Silver");
 $frn    = CommoditiesFactory::build("Federal Reserve Note");
 
-$silverBasket = new CommoditiesBasket();
-$frnBasket = new CommoditiesBasket();
+$silverBasket = new CommodityBasket();
+$frnBasket = new CommodityBasket();
 
 // Adds 1 oz of precious silver.
 $silverBasket->add($silver, 1);

@@ -91,7 +91,7 @@ class LoanControllerTest extends PHPUnit_Framework_TestCase
 		ob_start();
 		$this->controller->execute(ActionsList::REGISTER_LOAN);
 		ob_clean();
-		//file_put_contents(CMARKET_LIB_PATH . '/tests/data/loan-frn-50.dat', serialize($_SESSION['loans']));
+		//file_put_contents(CMARKET_PATH . '/tests/data/loan-frn-50.dat', serialize($_SESSION['loans']));
 		$lender = new LoanManager;
 		$expectedValue = $lender->buildLoan($_POST['loan_commodity'], $_POST['loan_quantity'], $_POST['loan_term'], $_POST['loan_interest_rate']);
 

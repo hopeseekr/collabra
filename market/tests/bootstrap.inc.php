@@ -5,7 +5,7 @@ Market::init();
 
 function grabPageHTML($page)
 {
-	$filename = CMARKET_LIB_PATH . '/views/' . $page  . '.tpl.php';
+	$filename = CMARKET_PATH . '/views/' . $page  . '.tpl.php';
 	if (!file_exists($filename))
 	{
 		$this->assert(false, "Template file $page.tpl.php not found.");
@@ -18,7 +18,7 @@ function grabPageHTML($page)
 	return $html;
 }
 
-// TODO: Migrate over to a CommoditiesFactory::buildBasket() factory.
+// TODO: Migrate over to a CommodityFactory::buildBasket() factory.
 function buildBasket($commodityName, $quantity)
 {
 	return buildPaymentBasket($commodityName, $quantity);
@@ -26,8 +26,8 @@ function buildBasket($commodityName, $quantity)
 
 function buildPaymentBasket($commodityName, $quantity)
 {
-	$commodity = CommoditiesFactory::build($commodityName);
-	$basket = new CommoditiesBasket();
+	$commodity = CommodityFactory::build($commodityName);
+	$basket = new CommodityBasket();
 	$basket->add($commodity, $quantity);
 
 	return $basket;

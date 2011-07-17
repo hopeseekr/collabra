@@ -6,6 +6,11 @@ class Flourish
 
 	protected static function autoload($className)
 	{
+		if (!file_exists(FLOURISH_LIB_PATH . '/' . $className . '.php'))
+		{
+			throw new RuntimeException('Cannot find file for class "' . $className . '"');
+		}
+
 		require FLOURISH_LIB_PATH . '/' . $className . '.php';
 	}
 
