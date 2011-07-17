@@ -66,13 +66,15 @@ class PaymentController implements CommandI
 
 		// TODO: Remove debug info.
 		//echo 'BEforE: <pre>', print_r($_SESSION, true), '</pre>';
-
 		// 2. Retrieve our baskets.
 		$paymentBasket = $_SESSION['payments'][$paymentID];
 		$loanBasket = $_SESSION['loans'][$loanID];
+//		print_r($paymentBasket); print_r($loanBasket); exit;
 
 		// 2. Pay the loan.
+//		print 'Loan bucket: '; print_r($loanBasket);
 		$modifiedLoanBasket = $this->bookie->handlePaymentTransaction($paymentBasket, $loanBasket, $amount);
+//		print 'Modified loan bucket: '; print_r($modifiedLoanBasket);
 
 		// 3. Record the transaction and update the ledgers.
 		$this->recordTransaction($paymentID, $loanID, $modifiedLoanBasket);
@@ -105,6 +107,8 @@ class PaymentController implements CommandI
 
 	protected function recordTransaction($paymentID, $loanID, $modifiedLoanBasket)
 	{
+		print 'Current loan: ' . print_r($_SESSION['loans'][$loanID], true) . "\n";
+		print 'Modified Loan Basket: ' . print_r($modifiedLoanBasket, true) . "\n";
 		// Prevent a memory leak by unsetting the old loan object.
 		unset($_SESSION['loans'][$loanID]);
 

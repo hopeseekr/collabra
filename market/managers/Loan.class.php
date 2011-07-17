@@ -9,6 +9,9 @@
 
 class LoanManager
 {
+	// TODO: Refactor LoanManager::buildLoan into a Factory.
+	// TODO: Refactor to replace CommodityStore with CommoditiesBasket.
+	// TODO: Refactor to remove $quantity.
 	/**
 	  * @return array[CommodityStore, float $quantity, int $loanTerm, float $interestRate]
 	 **/

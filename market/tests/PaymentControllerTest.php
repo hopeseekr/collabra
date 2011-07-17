@@ -12,7 +12,8 @@ require_once 'PHPUnit/Extensions/OutputTestCase.php';
 
 class PaymentManagerStub extends PaymentManager
 {
-	public function handlePaymentTransaction($paymentBasket, $loanBasket, $amount)
+	// TODO: Refactor the $loan array to a proper Loan object.
+	public function handlePaymentTransaction(CommoditiesBasket $paymentBasket, array $loan, $amount)
 	{
 		$FRNs = buildBasket('Federal Reserve Note', 55);
 

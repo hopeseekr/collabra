@@ -38,36 +38,43 @@ class PaymentManager
 		if ($quantity <= 0) { throw new OutOfBoundsException("The payment commodity quantity must be more than 0."); }
 	}
 
+	// TODO: Refactor to remove $quantity.
 	/** handlePaymentTransaction() applies a payment to a debt and returns the change.
 	  *
 	  * @param CommodityBasket $paymentBasket
-	  * @param CommodityBasket $loanBasket
+	  * @param array $loan
 	  * @param float $amount
-	  * @return CommodityBasket The change differential between $paymentBasket and $loanBasket
+	  * @return array A loan with the differential between $paymentBasket and $loan
 	  */
-	// FIXME: Shouldn't we standardize $amount as $quantity instead???
-    public function handlePaymentTransaction($paymentBasket, $loanBasket, $amount)
+    public function handlePaymentTransaction(CommoditiesBasket $paymentBasket, array $loan, $amount)
 	{
 		// 1. Sanity checks.
-		if ($amount <= 0) { throw new OutOfBoundsException("The payment commodity amount must be more than 0."); }
+		if ($paymentBasket->getTotalValuation() <= 0) { throw new OutOfBoundsException("The payment commodity amount must be more than 0."); }
 
 		// 2. Pay the loan.
 		// loans.  The keys to the arrays are numbers starting at zero. OK? ok
-
 		$comex = new CommoditiesExchange;
 
 # A class' public functions should ONLY directly aid in accomplishing the goals of the class.
 # A class' functions should NEVER be made public out of "coding convenience", as this is a sure
 # sign of improper design and a breaking of Encapsulation.
-		$FRNs = $comex->exchange($paymentBasket, $loanBasket);
-echo "FRNs: " . $FRNs->calculateWorth() . "\n";
+		$loanBasket = $loan['basket'];
+		$FRNs = $comex->exchange($paymentBasket, $loanBasket, CommoditiesExchange::FLAG_ALLOW_DEBT);
+//printf("Payment value: %.2f\n", $paymentBasket->getTotalValuation());
+//printf("Loan value: %.2f\n", $loanBasket->getTotalValuation());
+//echo "FRNs owed by lender: " . $FRNs->calculateWorth() . "\n";
+
 		// 3. Update the loan amount.
 		// TODO: This really needs to be stored in a database.
 		$loanStore = $loanBasket->take();
 		$modifiedLoanCommodity = CommoditiesFactory::build($loanStore->commodity->name);
 		$modifiedLoanBasket = new CommoditiesBasket;
-        $modifiedLoanBasket->add($modifiedLoanCommodity, $FRNs->quantity);
+        $modifiedLoanBasket->add($modifiedLoanCommodity, $FRNs->quantity * -1);
+//printf("Modified loan value: %.2f\n", $modifiedLoanBasket->getTotalValuation());
 
-		return $modifiedLoanBasket;
+		$lender = new LoanManager;
+		$modifiedLoan = $lender->buildLoan($loanStore->commodity->name, $FRNs->quantity * -1, $loan['loanTerm'], $loan['interestRate']);
+
+		return $modifiedLoan;
 	}
 }

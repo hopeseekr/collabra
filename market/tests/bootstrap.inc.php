@@ -18,6 +18,7 @@ function grabPageHTML($page)
     return $html;
 }
 
+// TODO: Migrate over to a CommoditiesFactory::buildBasket() factory.
 function buildBasket($commodityName, $quantity)
 {
     return buildPaymentBasket($commodityName, $quantity);

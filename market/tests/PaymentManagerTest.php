@@ -40,6 +40,7 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 	{
 	}
 
+	// TODO: Migrate over to a CommoditiesFactory::buildBasket() factory.
     protected function buildPaymentBasket($commodityName, $quantity)
     {
         $commodity = CommoditiesFactory::build($commodityName);
@@ -49,6 +50,9 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
         return $basket;
     }
 
+    /**
+    * @group PaymentManager::buildPaymentBasket
+    */
 	public function testWillNotBuildABasketWithAnInvalidCommodityName()
 	{
 		try
@@ -65,6 +69,9 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+    /**
+    * @group PaymentManager::buildPaymentBasket
+    */
 	public function testWillNotBuildABasketWithAnInvalidQuantity()
 	{
 		try
@@ -81,6 +88,9 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+    /**
+    * @group PaymentManager::buildPaymentBasket
+    */
 	public function testWillNotBuildABasketWithAEqualToOrLesserThanZeroQuantity()
 	{
 		try
@@ -110,11 +120,55 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+    /**
+    * @group PaymentManager::buildPaymentBasket
+    */
 	public function testWillBuildACommoditiesBasket()
 	{
 		$expectedValue = $this->buildPaymentBasket('Silver', 5);
 		$returnedValue = $this->bookie->buildPaymentBasket('Silver', 5);
 
 		$this->assertEquals($expectedValue, $returnedValue);
+	}
+
+    /**
+    * @group PaymentManager::handlePaymentTransaction
+    */
+    public function testWillNotAcceptNegativePayments()
+	{
+		$paymentBasket = $this->buildPaymentBasket('Silver', -5);
+
+		//$loanBasket = $this->buildPaymentBasket('FRN', 1);
+		$lender = new LoanManager();
+		$loan = $lender->buildLoan('FRN', 30, 15, 0.05);
+
+		try
+		{
+			$this->bookie->handlePaymentTransaction($paymentBasket, $loan, 1);
+			$this->fail('Accepted a negative payment.');
+		}
+		catch (OutOfBoundsException $e)
+		{
+			// TODO: Move to the PrettyException model.
+			$this->assertEquals("The payment commodity amount must be more than 0.", $e->getMessage());
+		}
+	}
+
+	public function testWillReturnAnAppropriatelyDeductedLoanObject()
+	{
+		$frnValue = 120;
+		$paymentBasket = $this->buildPaymentBasket('Silver', 1);
+
+		//$loanBasket = $this->buildPaymentBasket('FRN', 1);
+		$lender = new LoanManager();
+		$loan = $lender->buildLoan('FRN', $frnValue, 15, 0.05);
+		$expectedValue = $frnValue - $paymentBasket->getTotalValuation();
+
+		$modifiedLoan = $this->bookie->handlePaymentTransaction($paymentBasket, $loan, 1);
+		$this->assertInternalType('array', $modifiedLoan);
+		$this->assertArrayHasKey('basket', $modifiedLoan);
+
+		$loanBasket = $modifiedLoan['basket'];
+		$this->assertEquals($expectedValue, $loanBasket->getTotalValuation(), 'Returned an unexpected valuation.');
 	}
 }
