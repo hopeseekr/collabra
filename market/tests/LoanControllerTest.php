@@ -55,9 +55,9 @@ class LoanControllerTest extends PHPUnit_Framework_TestCase
 	{
 		$_SERVER['REQUEST_METHOD'] = 'post';
 		$goodData = array('loan_commodity' => 'Federal Reserve Note',
-						  'loan_quantity'  => 8500.00,
-						  'loan_term' => 15,
-						  'loan_interest_rate' => 6.0);
+		                  'loan_quantity'  => 8500.00,
+		                  'loan_term' => 15,
+		                  'loan_interest_rate' => 6.0);
 		
 		$testParams = array('loan_quantity', 'loan_term', 'loan_interest_rate');
 		foreach ($testParams as $param)

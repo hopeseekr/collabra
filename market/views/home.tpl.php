@@ -83,10 +83,8 @@ if (isset($_SESSION['loans']) && isset($_SESSION['payments']))
 								<option value=""> --- Select --- </option>
 <?php
 	// TODO: $loan needs to be a Loan model.
-	print_r($_SESSION);
 	foreach ($_SESSION['loans'] as $id => $loan)
 	{
-        print_r($loan);
 		$loanLine = sprintf('%s (%.2f)', 
 		                    $loan['basket']->getMeasureName(),
 		                    $loan['basket']->getTotalValuation());
