@@ -72,10 +72,7 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 		}
 		catch (CommodityException $e)
 		{
-			if ($e->getMessage() != "INSUFFICIENT FUNDS: Input is worth less than deliverable.")
-			{
-				$this->assertTrue(false, 'Returnded an unexpected exception message.');
-			}
+			$this->assertEquals($e->getMessage(), "INSUFFICIENT FUNDS: Input is worth less than deliverable.");
 		}
 	}
 

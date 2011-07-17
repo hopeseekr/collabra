@@ -58,14 +58,11 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		try
 		{
 			$this->bookie->buildPaymentBasket(1234, 1);
-			$this->assertTrue(false, 'Built a basket using an invalid commodity name');
+			$this->fail('Built a basket using an invalid commodity name');
 		}
 		catch (InvalidArgumentException $e)
 		{
-			if ($e->getMessage() != "Commodity Name must be a string")
-			{
-				$this->assertTrue(false, 'Returned an unexpected exception message');
-			}
+			$this->assertEquals($e->getMessage(), "Commodity Name must be a string");
 		}
 	}
 
@@ -77,14 +74,11 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		try
 		{
 			$this->bookie->buildPaymentBasket('Silver', 'string');
-			$this->assertTrue(false, 'Built a basket using an invalid quantity');
+			$this->fail('Built a basket using an invalid quantity');
 		}
 		catch (InvalidArgumentException $e)
 		{
-			if ($e->getMessage() != "Quantity must be a float")
-			{
-				$this->assertTrue(false, 'Returned an unexpected exception message');
-			}
+			$this->assertEquals($e->getMessage(), "Quantity must be a float");
 		}
 	}
 
@@ -96,27 +90,21 @@ class PaymentManagerTest extends PHPUnit_Framework_TestCase
 		try
 		{
 			$this->bookie->buildPaymentBasket('Silver', 0);
-			$this->assertTrue(false, 'Built a basket using quantity equal to 0.');
+			$this->fail('Built a basket using quantity equal to 0.');
 		}
 		catch (OutOfBoundsException $e)
 		{
-			if ($e->getMessage() != "The payment commodity quantity must be more than 0.")
-			{
-				$this->assertTrue(false, 'Returned an unexpected exception message');
-			}
+			$this->assertEquals($e->getMessage(), "The payment commodity quantity must be more than 0.");
 		}
 
 		try
 		{
 			$this->bookie->buildPaymentBasket('Silver', -5);
-			$this->assertTrue(false, 'Built a basket using quantity less than 0.');
+			$this->fail('Built a basket using quantity less than 0.');
 		}
 		catch (OutOfBoundsException $e)
 		{
-			if ($e->getMessage() != "The payment commodity quantity must be more than 0.")
-			{
-				$this->assertTrue(false, 'Returned an unexpected exception message');
-			}
+			$this->assertEquals($e->getMessage(), "The payment commodity quantity must be more than 0.");
 		}
 	}
 

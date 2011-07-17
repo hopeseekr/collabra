@@ -62,14 +62,11 @@ class CommoditiesFactoryTest extends PHPUnit_Framework_TestCase
 		try
 		{
 			CommoditiesFactory::build($badCommodity);
-			$this->assert(false);
+			$this->fail('Attempted to build an unknown commodity.');
 		}
 		catch (CommodityException $e)
 		{
-			if ($e->getMessage() != "No build process for a commodity called " . $badCommodity)
-			{
-				$this->assert(false);
-			}
+			$this->assertEquals($e->getMessage(), "No build process for a commodity called " . $badCommodity);
 		}
 	}
 

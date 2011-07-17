@@ -122,19 +122,11 @@ class CommoditiesBasketTest extends PHPUnit_Framework_TestCase
 		try
 		{
 			$this->basket->take();
-			// Test should NOT get this far!
-			$this->assert(false);
+			$this->fail('Tried to take an item from an empty basket.');
 		}
 		catch (CommodityException $e)
 		{
-			if ($e->getMessage() != "Your basket is empty")
-			{
-				$this->assert(false);
-			}
-		}
-		catch (Exception $e)
-		{
-			$this->assert(false);
+			$this->assertEquals($e->getMessage(), "Your basket is empty");
 		}
 	}
 
