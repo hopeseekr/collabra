@@ -68,7 +68,7 @@ class CommoditiesBasket
 	/** @return CommodityStore **/
 	public function take()
 	{
-		if(empty($this->commoditiesQueue))
+		if (empty($this->commoditiesQueue))
 		{
 			throw new CommodityException("Your basket is empty");
 		}

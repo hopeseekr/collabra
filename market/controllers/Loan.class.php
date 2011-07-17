@@ -34,7 +34,7 @@ class LoanController implements CommandI
 
 	protected function grabUserInput()
 	{
-		if(empty($_POST))
+		if (empty($_POST))
 		{
 			throw new ControllerException("No user input", ControllerException::INVALID_USER_INPUT);
 		}

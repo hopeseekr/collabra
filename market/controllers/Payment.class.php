@@ -35,7 +35,7 @@ class PaymentController implements CommandI
 	{
 		// 1. Grab the form data.
 		// FIXME: This is a great candidate for the Strategy Pattern.
-		if(empty($_POST))
+		if (empty($_POST))
 		{
 			throw new ControllerException("No user input", ControllerException::INVALID_USER_INPUT);
 		}
@@ -98,8 +98,14 @@ class PaymentController implements CommandI
 		if (!is_int($paymentID)) { throw new InvalidArgumentException("Payment ID must be an integer."); }
 		if (!is_numeric($amount)) { throw new InvalidArgumentException("Amount must be a float."); }
 
-		if (!isset($_SESSION['payments'])) { throw new LogicException("You must have a registered payment to make a payment."); }
-		if (!isset($_SESSION['loans'])) { throw new LogicException("You must have a registered loan to make a payment."); }
+		if (!isset($_SESSION['payments']))
+		{
+			throw new LogicException("You must have a registered payment to make a payment.");
+		}
+		if (!isset($_SESSION['loans']))
+		{
+			throw new LogicException("You must have a registered loan to make a payment.");
+		}
 
 		if (!isset($_SESSION['payments'][$paymentID])) { throw new InvalidArgumentException("Invalid Payment ID."); }
 		if (!isset($_SESSION['loans'][$loanID])) { throw new InvalidArgumentException("Invalid Target Loan ID."); }
