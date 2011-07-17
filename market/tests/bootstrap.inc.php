@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 require_once realpath(dirname(__FILE__) . '/../Market.php');
 Market::init();
 

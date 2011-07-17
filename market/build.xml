@@ -18,7 +18,7 @@
 			format="noframes"
 			todir="tests/reports/html"
 			/>
-		<exec dir="tests" command="phpunit --coverage-html reports/html/coverage --testdox-html reports/html/docs.html MarketTestSuite.php" />
+		<exec dir="tests" command="phpunit --coverage-html reports/html/coverage --testdox-html reports/html/docs.html" />
 	</target>
 	<target name="phpcs">
 		<!-- standards: PHPCS, Zend, PEAR, Squiz and MySource
