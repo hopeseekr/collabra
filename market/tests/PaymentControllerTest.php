@@ -101,7 +101,7 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 			$this->controller->execute(ActionsList::MAKE_PAYMENT);
 			$this->fail('Worked without any user input');
 		}
-		catch(ControllerException $e)
+		catch (ControllerException $e)
 		{
 			$this->assertEquals(ControllerException::INVALID_USER_INPUT, $e->getCode());
 		}
@@ -119,7 +119,7 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 			$this->controller->execute(ActionsList::MAKE_PAYMENT);
 			$this->fail('Worked without a registered payment basket.');
 		}
-		catch(LogicException $e)
+		catch (LogicException $e)
 		{
 			$this->assertEquals("You must have a registered payment to make a payment.", $e->getMessage());
 		}
@@ -139,12 +139,12 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 			$this->controller->execute(ActionsList::MAKE_PAYMENT);
 			$this->fail('Worked without a registered loan.');
 		}
-		catch(LogicException $e)
+		catch (LogicException $e)
 		{
 			$this->assertEquals("You must have a registered loan to make a payment.", $e->getMessage());
 		}
 	}
-   
+
 	public function testWillMakeAPayment()
 	{
 		//$this->markTestIncomplete();
