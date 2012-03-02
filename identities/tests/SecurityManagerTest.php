@@ -15,9 +15,13 @@
 * BSD License: http://www.opensource.org/licenses/bsd-license.php
 **/
 
-require_once 'managers/Security.class.php';
+$APP_PATH = realpath(dirname(__FILE__) . '/..'); 
+
 
 require_once 'PHPUnit/Framework/TestCase.php';
+
+include $APP_PATH . '/managers/Security.class.php';
+include $APP_PATH . '/models/User.data.php';
 
 /**
  * SecurityController test case.

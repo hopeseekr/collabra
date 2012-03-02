@@ -17,9 +17,9 @@
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 
-require_once 'models/User.data.php';
+//require_once 'models/User.data.php';
 
-require_once 'tests/SecurityManagerTest.php';
+require_once 'SecurityManagerTest.php';
 
 /**
  * Static test suite.
