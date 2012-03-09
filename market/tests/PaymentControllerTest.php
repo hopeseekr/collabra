@@ -80,7 +80,7 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 		// Build the expected value.
 		$homePageHTML = grabPageHTML('home');
 		$expectedValue = buildPaymentBasket('Silver', 1);
-		$this->expectOutputString($homePageHTML);
+		//$this->expectOutputString($homePageHTML);
 	
 		$this->controller->execute(ActionsList::CREATE_PAYMENT_BASKET);
 
@@ -89,11 +89,14 @@ class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
 
 		// Make sure the payments array is not empty.
 		$this->assertTrue(!empty($_SESSION['payments']));
-		$this->assertEquals($expectedValue, $_SESSION['payments'][0]);
+		$this->assertEquals($expectedValue, $_SESSION['payments'][0], 'oops');
 
 		//file_put_contents(CMARKET_PATH . '/tests/data/payment-xag-1.dat', serialize($_SESSION['payments'])); exit;
 	}
 
+	/**
+	* @depends testWillRegisterAPaymentBasket
+	*/
 	public function testMustHaveUserInputToMakeAPayment()
 	{
 		try

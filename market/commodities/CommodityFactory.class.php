@@ -11,6 +11,7 @@
 class CommodityFactory
 {
 	/** @return Commodity **/
+	//public static function build($commodityName, $quantity = 1)
 	public static function build($name)
 	{
 		if ($name == "Silver" || $name == "XAG")
