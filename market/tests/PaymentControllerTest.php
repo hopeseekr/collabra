@@ -8,13 +8,12 @@
  **/
 
 require_once 'bootstrap.inc.php';
-require_once 'PHPUnit/Extensions/OutputTestCase.php';
-
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @covers PaymentController
  **/
-class PaymentControllerTest extends PHPUnit_Extensions_OutputTestCase
+class PaymentControllerTest extends PHPUnit_Framework_TestCase
 {
 	/** @var PaymentController **/
 	private $controller;

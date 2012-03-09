@@ -8,9 +8,9 @@
  **/
 
 require_once 'bootstrap.inc.php';
-require_once 'PHPUnit/Extensions/OutputTestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
-class GenericControllerTest extends PHPUnit_Extensions_OutputTestCase
+class GenericControllerTest extends PHPUnit_Framework_TestCase
 {
 	/** @var GenericController **/
 	private $controller;
