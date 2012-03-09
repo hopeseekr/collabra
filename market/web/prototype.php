@@ -16,8 +16,8 @@ require '../commodities/CommoditiesFactory.class.php';
 require_once realpath(dirname(__FILE__) . '/../Market.php');
 Market::init();
 
-$silver = CommoditiesFactory::build("Silver");
-$frn    = CommoditiesFactory::build("Federal Reserve Note");
+$silver = CommodityFactory::build("Silver");
+$frn    = CommodityFactory::build("Federal Reserve Note");
 
 $silverBasket = new CommodityBasket();
 $frnBasket = new CommodityBasket();
@@ -32,7 +32,7 @@ printf("Value of Silver basket: $%.2f\n", $silverBasket->getTotalValuation());
 printf("Value of FRN basket: $%.2f\n", $frnBasket->getTotalValuation());
 
 // Set up the Commodity Exchange.
-$comex = CommoditiesExchange::getInstance();
+$comex = new CommoditiesExchange;
 
 // Get value differential between silver and FRNs.
 $value = $comex->calculateValueDifferential($silverBasket, $frnBasket);
