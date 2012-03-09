@@ -58,7 +58,7 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 
 		$expectedValue = 15.0;
 
-		$returnedValue = $this->broker->getValueDifferential($frnBasket1, $frnBasket2);
+		$returnedValue = $this->broker->calculateValueDifferential($frnBasket1, $frnBasket2);
 		$this->assertEquals($expectedValue, $returnedValue);
 	}
 
@@ -91,7 +91,7 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 		$silverBasket = $this->createBasket('Silver', 1);
 		$frnBasket = $this->createBasket('Federal Reserve Note', 1);
 
-		$valueDifferential = $this->broker->getValueDifferential($silverBasket, $frnBasket);
+		$valueDifferential = $this->broker->calculateValueDifferential($silverBasket, $frnBasket);
 		//echo "Value Differential: $valueDifferential\n";
 		$frn = CommodityFactory::build('Federal Reserve Note');
 		$frnStore = new CommodityStore($frn, $valueDifferential);
@@ -112,7 +112,7 @@ class CommoditiesExchangeTest extends PHPUnit_Framework_TestCase
 		$silverBasket = $this->createBasket('Silver', 1);
 		$frnBasket = $this->createBasket('Federal Reserve Note', 1);
 
-		$valueDifferential = $this->broker->getValueDifferential($frnBasket, $silverBasket);
+		$valueDifferential = $this->broker->calculateValueDifferential($frnBasket, $silverBasket);
 		$frn = CommodityFactory::build('Federal Reserve Note');
 		$frnStore = new CommodityStore($frn, $valueDifferential);
 

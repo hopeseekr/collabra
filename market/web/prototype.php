@@ -35,7 +35,7 @@ printf("Value of FRN basket: $%.2f\n", $frnBasket->getTotalValuation());
 $comex = CommoditiesExchange::getInstance();
 
 // Get value differential between silver and FRNs.
-$value = $comex->getValueDifferential($silverBasket, $frnBasket);
+$value = $comex->calculateValueDifferential($silverBasket, $frnBasket);
 
 echo "Differential: $value\n";
 # The assert(<truth condition>) function does nothing if the condition inside

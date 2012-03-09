@@ -17,15 +17,14 @@ class CommoditiesExchange
 	public function exchange(CommodityBasket $inputBasket, CommodityBasket $deliverableBasket, $flags = null)
 	{
 		// 1. Obtain the valuation difference for the two commodities.
-		$difference = self::getValueDifferential($inputBasket, $deliverableBasket);
+		$difference = self::calculateValueDifferential($inputBasket, $deliverableBasket);
 
 		// 2. Return the results from $this->handleValueDifference().
 		return $this->handleValueDifference($difference, $flags);
 	}
 
-	// TODO: Rename to calculateValueDifferential()
 	/** @return float The valuation difference between two commodities **/
-	public static function getValueDifferential(CommodityBasket $inputBasket, CommodityBasket $deliverableBasket)
+	public static function calculateValueDifferential(CommodityBasket $inputBasket, CommodityBasket $deliverableBasket)
 	{
 		$difference = $inputBasket->getTotalValuation() - $deliverableBasket->getTotalValuation();
 
