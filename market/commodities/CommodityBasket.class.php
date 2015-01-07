@@ -12,6 +12,16 @@
 **/
 class CommodityBasket
 {
+	public function testMethod1()
+	{
+		echo "This is merely a bunch of filler code to test how the code is getting messed up.";
+		echo <<<TEXT
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Aenean at purus vel tellus vehicula suscipit.
+Integer bibendum dui a quam sodales mollis.
+TEXT;
+	}
+
 	// TODO: Determine a more descriptive name for array($commodity, $quantity)
 	/** @var Commodity[] An array of Commodities **/
 	protected $commoditiesQueue;
@@ -40,7 +50,7 @@ class CommodityBasket
 	{
 		return $this->measureCommodity->name;
 	}
-	
+
 	/** Adds a commodity to the basket.
 	  * @param Commodity
 	  * @param [int] Quantity of the commodity
@@ -79,7 +89,7 @@ class CommodityBasket
 	}
 
 	/** dumpStats() returns the quantity, valuation, and total valuation of
-	  * each commodity in the basket. 
+	  * each commodity in the basket.
 	  *
 	  * @return array('name', 'valuation', 'quantity', 'total')
 	**/
