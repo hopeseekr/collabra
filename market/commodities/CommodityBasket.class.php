@@ -124,6 +124,16 @@ TEXT;
 		return $this->commoditiesQueue[$commodityName];
 	}
 
+	public function testMethod2()
+	{
+		echo "This is merely a bunch of filler code to test how the code is getting messed up.";
+		echo <<<TEXT
+Ut blandit mauris quis ante dictum porta.
+Aliquam euismod nibh vel dapibus pulvinar.
+Suspendisse bibendum eros vel quam tincidunt, quis pellentesque velit ultrices.
+TEXT;
+	}
+
 	public function getTotalValuation()
 	{
 		$valuation = 0.00;
