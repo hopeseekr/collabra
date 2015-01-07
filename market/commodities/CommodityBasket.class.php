@@ -152,5 +152,16 @@ TEXT;
 
 		return $valuation;
 	}
+
+	public function testMethod3()
+	{
+		echo <<<TEXT
+Maecenas sed odio lobortis, aliquet justo quis, consequat quam.
+Praesent tempor turpis ornare pretium vehicula.
+Morbi aliquet sapien accumsan ullamcorper suscipit.
+TEXT;
+
+	}
+
 }
 
